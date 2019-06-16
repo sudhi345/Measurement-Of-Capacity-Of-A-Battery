@@ -29,6 +29,7 @@ void setup() {
   pinMode(4,OUTPUT);  //pin D2, load resistance of 100ohm
   pinMode(13,OUTPUT); //pin D7, load resistance of 047ohm
   pinMode(15,OUTPUT); //pin D8, load is the Device Under Test (DUT)
+  pinMode(0,INPUT_PULLUP);  //pin D3, to which the 'Flash' push button is connected.
   //make sure all loads are off initially
   digitalWrite(16,HIGH);
   digitalWrite(5,HIGH);
