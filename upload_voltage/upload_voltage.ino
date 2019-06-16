@@ -14,6 +14,7 @@
 #include "config.h"
 
 #define Vin A0  //input: battery voltage 
+const float VLowerCutOff = 2.1;  //define the lower cut off voltage or the end of discharge voltage for the battery
 int voltage = 0;
 int last = -1;
 int Vin_max = 3.3;
@@ -78,13 +79,13 @@ void loop() {
   last = voltage; // store last read voltage
   delay(2000);  // wait two seconds
 }
-  if(last < 2.1)  {   //if the battery voltage falls below the lower cut off
+  if(last < VLowerCutOff)  {   //if the battery voltage falls below the lower cut off
                       //turn OFF ALL loads when batteries got fully discharged.
       flag=0;         //clear the flag so that it does not oscillate when terminal voltage rises slightly.
       digitalWrite(16,HIGH);
       digitalWrite(5,HIGH);
       digitalWrite(4,HIGH);
-      digitalWrite(0,HIGH);
+      digitalWrite(13,HIGH);
       digitalWrite(15,HIGH); 
       Serial.println();
       Serial.println("Batteries got fully DISCHARGED...");
