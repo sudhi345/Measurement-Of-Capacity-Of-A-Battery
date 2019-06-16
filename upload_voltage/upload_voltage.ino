@@ -6,39 +6,39 @@
 // All text above must be included in any redistribution.
 
 /************************** Configuration ***********************************/
-
 // edit the config.h tab and enter your Adafruit IO credentials
 // and any additional configuration needed for WiFi, cellular,
 // or ethernet clients.
+/****************************************************************************/
 
 #include "config.h"
 
-/************************ Example Starts Here *******************************/
-
-#define Pot_Pin A0
-// Potentiometer state
+#define Vin A0  //input: battery voltage 
 int voltage = 0;
 int last = -1;
-int Vout_max = 3.3;
-int Vout_min = 0;
-// set up the 'analog' feed
-AdafruitIO_Feed *analog = io.feed("analog"); //Replace "analog" in this line with the name of the feed that you created
+int Vin_max = 3.3;
+int Vin_min = 0;
+boolean flag = 1;      
+
+AdafruitIO_Feed *analog = io.feed("analog"); //Set up the feed. Replace "analog" in this line with the name of the feed that you created
 
 void setup() {
-pinMode(0,OUTPUT);
-pinMode(4,OUTPUT);
-pinMode(5,OUTPUT);
-pinMode(16,OUTPUT);
-pinMode(15,OUTPUT);
+  //set pinMode
+  pinMode(16,OUTPUT);  //pin D0, load resistance of 560ohm
+  pinMode(5,OUTPUT);  //pin D1, load resistance of 330ohm
+  pinMode(4,OUTPUT);  //pin D2, load resistance of 100ohm
+  pinMode(13,OUTPUT); //pin D7, load resistance of 047ohm
+  pinMode(15,OUTPUT); //pin D8, load is the Device Under Test (DUT)
+  //make sure all loads are off initially
   digitalWrite(16,HIGH);
   digitalWrite(5,HIGH);
   digitalWrite(4,HIGH);
-  digitalWrite(0,HIGH);
+  digitalWrite(13,HIGH);
   digitalWrite(15,HIGH);
-  Serial.begin(115200);
+  
+  Serial.begin(115200);    //begin serial communication
 
-  // wait for serial monitor to open
-  while(! Serial);
+  while(! Serial);  // wait for serial monitor to open
 
   // connect to io.adafruit.com
   Serial.print("Connecting to Adafruit IO");
@@ -53,51 +53,43 @@ pinMode(15,OUTPUT);
   // we are connected
   Serial.println();
   Serial.println(io.statusText());
-  
+  Serial.println();
   digitalWrite(4,LOW);     //turn on the mosfet connecting 100ohm load
 }
 
 void loop() {
 
-  // io.run(); is required for all sketches.
-  // it should always be present at the top of your loop function.
-  //It keeps the client connected to
+  // io.run(); is required for all sketches. It should always be present at the top of your loop function. It keeps the client connected to
   // io.adafruit.com, and processes any incoming data.
   io.run();
+  if(flag)  {
+  voltage = analogRead(Vin);  // grab the voltage of the battery
+  float Vbat = float((Vin_max - Vin_min))*voltage/1024;
 
-  // grab the voltage across the potentiometer
-  voltage = analogRead(Pot_Pin);
-  float V_pot = float((Vout_max - Vout_min))*voltage/1023;
-
-  // return if the value hasn't changed
+  
   if(voltage == last)
-    return;
+    return;     // return if the value hasn't changed
 
-  // save the current state to the analog feed
-  Serial.print("sending -> V_pot= ");
-  Serial.print(V_pot);
+  Serial.print("sending -> Vbat= ");
+  Serial.print(Vbat);
   Serial.println(" V");
-  analog->save(V_pot);
-
-  // store last photocell state
-  last = voltage;
-
-  // wait two seconds (1000 milliseconds == 1 second)
-  delay(2000);
-
-  if(V_pot < 2.1)  {
-//turn OFF ALL loads when batteries discharged.
-  digitalWrite(16,HIGH);
-  digitalWrite(5,HIGH);
-  digitalWrite(4,HIGH);
-  digitalWrite(0,HIGH);
-  digitalWrite(15,HIGH); 
-  Serial.println();
-  Serial.println();
-  Serial.println("**********************************************************************************************************************");
-  Serial.println("------------------------------------Batteries got fully DISCHARGED!---------------------------------------------------");
-  Serial.println("**********************************************************************************************************************");
-  Serial.println();
-  while(1);     //do nothing    
+  analog->save(Vbat); // save the current state to the analog feed
+  last = voltage; // store last read voltage
+  delay(2000);  // wait two seconds
+}
+  if(last < 2.1)  {   //if the battery voltage falls below the lower cut off
+                      //turn OFF ALL loads when batteries got fully discharged.
+      flag=0;         //clear the flag so that it does not oscillate when terminal voltage rises slightly.
+      digitalWrite(16,HIGH);
+      digitalWrite(5,HIGH);
+      digitalWrite(4,HIGH);
+      digitalWrite(0,HIGH);
+      digitalWrite(15,HIGH); 
+      Serial.println();
+      Serial.println("Batteries got fully DISCHARGED...");
+      Serial.println();
+      while(1){
+          delay(1000);  //do nothing    
+       }
   }
 }
