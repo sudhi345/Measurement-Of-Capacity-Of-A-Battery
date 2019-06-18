@@ -13,12 +13,8 @@
 #include "config.h"
 #include "DischargeBattery.h"
 
-#define Vin A0  //input: battery voltage 
-const float VLowerCutOff = 2.1;  //define the lower cut off voltage or the end of discharge voltage for the battery
-int voltage = 0;
-int last = -1;
-int Vin_max = 3.3;
-int Vin_min = 0;
+float Vbat = 0;
+float last = -1;
 boolean ONCE_DISCHARGED = 0;      
 
 AdafruitIO_Feed *analog = io.feed("analog"); //Set up the feed. Replace "analog" in this line with the name of the feed that you created
@@ -31,6 +27,7 @@ void setup() {
   pinMode(LOAD_047,OUTPUT);  //pin D7, load resistance of 047ohm
   pinMode(DUT,OUTPUT);       //pin D8, load is the Device Under Test (DUT)
   pinMode(FLASH_BUTTON,INPUT_PULLUP);  //pin D3, to which the 'Flash' push button is connected.
+  pinMode(EN_VOLTAGE_DIVIDER,OUTPUT);       //pin D6, gate of the mosfet
   
   turnOffAll();   //make sure all loads are off initially
   
@@ -52,7 +49,7 @@ void setup() {
   Serial.println();
   Serial.println(io.statusText());
   Serial.println();
-  digitalWrite(LOAD_116,LOW);     //turn on the mosfet connecting 100ohm load
+  loadSelect();
 }
 
 void loop() {
@@ -61,22 +58,20 @@ void loop() {
   // io.adafruit.com, and processes any incoming data.
   io.run();
   if(! ONCE_DISCHARGED)  {
-  voltage = analogRead(Vin);  // grab the voltage of the battery
-  float Vbat = float((Vin_max - Vin_min))*voltage/1024;
-
-  
-  if(voltage == last)
+  Vbat = readVoltage();
+  if(Vbat == last)
     return;     // return if the value hasn't changed
 
   Serial.print("sending -> Vbat= ");
   Serial.print(Vbat);
   Serial.println(" V");
   analog->save(Vbat); // save the current state to the analog feed
-  last = voltage; // store last read voltage
+  last = Vbat; // store last read Vbat
   delay(2000);  // wait two seconds
 }
-  if(last < VLowerCutOff)  {   //if the battery voltage falls below the lower cut off
-      ONCE_DISCHARGED = 1;         //clear the ONCE_DISCHARGED so that it does not oscillate when terminal voltage rises slightly.
+
+  if(last < VLowerCutOff)  {   //if the battery Vbat falls below the lower cut off
+      ONCE_DISCHARGED = 1;         //clear the ONCE_DISCHARGED so that it does not oscillate when terminal Vbat rises slightly.
       turnOffAll();    //turn OFF ALL loads when batteries got fully discharged.
       Serial.println();
       Serial.println("Batteries got fully DISCHARGED...");
