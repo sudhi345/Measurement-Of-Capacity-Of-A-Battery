@@ -28,15 +28,11 @@ void setup() {
   pinMode(LOAD_560,OUTPUT);  //pin D0, load resistance of 560ohm
   pinMode(LOAD_232,OUTPUT);  //pin D1, load resistance of 232ohm
   pinMode(LOAD_116,OUTPUT);  //pin D2, load resistance of 116ohm
-  pinMode(LOAD_047,OUTPUT); //pin D7, load resistance of 047ohm
-  pinMode(DUT,OUTPUT); //pin D8, load is the Device Under Test (DUT)
+  pinMode(LOAD_047,OUTPUT);  //pin D7, load resistance of 047ohm
+  pinMode(DUT,OUTPUT);       //pin D8, load is the Device Under Test (DUT)
   pinMode(FLASH_BUTTON,INPUT_PULLUP);  //pin D3, to which the 'Flash' push button is connected.
-  //make sure all loads are off initially
-  digitalWrite(LOAD_560,HIGH);
-  digitalWrite(LOAD_232,HIGH);
-  digitalWrite(LOAD_116,HIGH);
-  digitalWrite(LOAD_047,HIGH);
-  digitalWrite(DUT,HIGH);
+  
+  turnOffAll();   //make sure all loads are off initially
   
   Serial.begin(115200);    //begin serial communication
 
@@ -80,13 +76,8 @@ void loop() {
   delay(2000);  // wait two seconds
 }
   if(last < VLowerCutOff)  {   //if the battery voltage falls below the lower cut off
-                      //turn OFF ALL loads when batteries got fully discharged.
       ONCE_DISCHARGED = 1;         //clear the ONCE_DISCHARGED so that it does not oscillate when terminal voltage rises slightly.
-      digitalWrite(LOAD_560,HIGH);
-      digitalWrite(LOAD_232,HIGH);
-      digitalWrite(LOAD_116,HIGH);
-      digitalWrite(LOAD_047,HIGH);
-      digitalWrite(DUT,HIGH); 
+      turnOffAll();    //turn OFF ALL loads when batteries got fully discharged.
       Serial.println();
       Serial.println("Batteries got fully DISCHARGED...");
       Serial.println();
