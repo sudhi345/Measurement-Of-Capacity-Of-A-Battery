@@ -17,13 +17,13 @@ $EndDescr
 $Comp
 L Connector:Conn_01x02_Male J2
 U 1 1 5CF76A7D
-P 8250 1800
-F 0 "J2" H 8150 1700 50  0000 L CNN
-F 1 "DUT" H 8100 1800 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 8250 1800 50  0001 C CNN
-F 3 "~" H 8250 1800 50  0001 C CNN
-	1    8250 1800
-	-1   0    0    1   
+P 8250 1700
+F 0 "J2" H 8150 1600 50  0000 L CNN
+F 1 "DUT" H 8100 1700 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 8250 1700 50  0001 C CNN
+F 3 "~" H 8250 1700 50  0001 C CNN
+	1    8250 1700
+	-1   0    0    -1  
 $EndComp
 $Comp
 L Connector:Conn_01x02_Male J1
@@ -57,7 +57,7 @@ Text Label 1800 2150 0    50   ~ 0
 Vbat
 Text Notes 3300 1350 0    50   ~ 0
 Discharge Circuitry: Battery discharges through the resistor(s) selected by the MCU by giving active high signal on CtrlX.
-Text Notes 8300 2100 0    50   ~ 0
+Text Notes 8350 2100 0    50   ~ 0
 J2 is used to\nconnect the\nDevice Under Test.
 Text Notes 2250 2550 0    50   ~ 0
 J1 is used to\nconnect the \nBattery [charged].
