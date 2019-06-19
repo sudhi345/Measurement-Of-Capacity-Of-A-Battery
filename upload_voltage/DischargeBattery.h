@@ -4,11 +4,12 @@
 #define LOAD_047 13       //pin D7, load resistance of 047ohm
 #define DUT      15       //pin D8, load is the Device Under Test (DUT)
 #define FLASH_BUTTON 0    //pin D3, to which the 'Flash' push button is connected.
+#define LED_BUILTIN 2     //define the inbuilt led pin
 #define EN_VOLTAGE_DIVIDER 12 //pin D6 which drives the gate of a mosfet which enables the voltage divider for analog input.
 #define Vin A0  //input: battery voltage 
 const float VLowerCutOff = 2.1;  //define the lower cut off voltage or the end of discharge voltage for the battery
-const int Vin_max = 3;
-const int Vin_min = 0;
+const int Vin_max = 3;           //maximum voltage that can be given as analog input
+const int Vin_min = 0;           //minimum voltage that can be given as analog input
 
 void turnOffAll() {
   digitalWrite(LOAD_560,HIGH);
@@ -23,9 +24,16 @@ float readVoltage() {
   digitalWrite(EN_VOLTAGE_DIVIDER, HIGH);
   v=analogRead(Vin);
   digitalWrite(EN_VOLTAGE_DIVIDER, LOW);
-  return (((Vin_max - Vin_min)*v)/1024);
+  return ((float(Vin_max - Vin_min)*v)/1024);
 }
 
 void loadSelect() {
-  
+  Serial.end();
+  while(digitalRead(FLASH_BUTTON)) {
+    digitalWrite(LED_BUILTIN,LOW);
+    delay(500);
+    digitalWrite(LED_BUILTIN,HIGH);
+    delay(500);
+  }
+  Serial.begin(115200);
 }
