@@ -52,17 +52,19 @@ void loop() {
   Vbat = readVoltage();
   if(Vbat == last)
     return;     // return if the value hasn't changed
-
+  if(! (Vbat < VLowerCutOff)) {
   analog->save(Vbat); // save the current state to the analog feed
   last = Vbat; // store last read Vbat
   delay(2000);  // wait two seconds
+  }
 }
 
-  if(last < VLowerCutOff)  {   //if the battery Vbat falls below the lower cut off
+  if(Vbat < VLowerCutOff)  {   //if the battery Vbat falls below the lower cut off
       ONCE_DISCHARGED = 1;         //clear the ONCE_DISCHARGED so that it does not oscillate when terminal Vbat rises slightly.
       turnOffAll();    //turn OFF ALL loads when batteries got fully discharged.
    
       while(1){
+          blinky(3);
           delay(1000);  //do nothing    
        }
   }
