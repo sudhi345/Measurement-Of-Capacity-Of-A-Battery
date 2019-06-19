@@ -17,13 +17,13 @@ $EndDescr
 $Comp
 L Connector:Conn_01x02_Male J2
 U 1 1 5CF76A7D
-P 8250 1800
-F 0 "J2" H 8150 1700 50  0000 L CNN
-F 1 "DUT" H 8100 1800 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 8250 1800 50  0001 C CNN
-F 3 "~" H 8250 1800 50  0001 C CNN
-	1    8250 1800
-	-1   0    0    1   
+P 8250 1700
+F 0 "J2" H 8150 1600 50  0000 L CNN
+F 1 "DUT" H 8100 1700 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 8250 1700 50  0001 C CNN
+F 3 "~" H 8250 1700 50  0001 C CNN
+	1    8250 1700
+	-1   0    0    -1  
 $EndComp
 $Comp
 L Connector:Conn_01x02_Male J1
@@ -57,7 +57,7 @@ Text Label 1800 2150 0    50   ~ 0
 Vbat
 Text Notes 3300 1350 0    50   ~ 0
 Discharge Circuitry: Battery discharges through the resistor(s) selected by the MCU by giving active high signal on CtrlX.
-Text Notes 8300 2100 0    50   ~ 0
+Text Notes 8350 2100 0    50   ~ 0
 J2 is used to\nconnect the\nDevice Under Test.
 Text Notes 2250 2550 0    50   ~ 0
 J1 is used to\nconnect the \nBattery [charged].
@@ -526,7 +526,7 @@ U 1 1 5D09C200
 P 3500 4250
 F 0 "D1" H 3491 4466 50  0000 C CNN
 F 1 "LED" H 3491 4375 50  0000 C CNN
-F 2 "" H 3500 4250 50  0001 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3500 4250 50  0001 C CNN
 F 3 "~" H 3500 4250 50  0001 C CNN
 	1    3500 4250
 	1    0    0    -1  
@@ -537,7 +537,7 @@ U 1 1 5D09C297
 P 3500 4750
 F 0 "D2" H 3491 4966 50  0000 C CNN
 F 1 "LED" H 3491 4875 50  0000 C CNN
-F 2 "" H 3500 4750 50  0001 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3500 4750 50  0001 C CNN
 F 3 "~" H 3500 4750 50  0001 C CNN
 	1    3500 4750
 	1    0    0    -1  
@@ -548,7 +548,7 @@ U 1 1 5D09D4AF
 P 3500 5300
 F 0 "D3" H 3491 5516 50  0000 C CNN
 F 1 "LED" H 3491 5425 50  0000 C CNN
-F 2 "" H 3500 5300 50  0001 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3500 5300 50  0001 C CNN
 F 3 "~" H 3500 5300 50  0001 C CNN
 	1    3500 5300
 	1    0    0    -1  
@@ -559,7 +559,7 @@ U 1 1 5D09E6D2
 P 3500 5900
 F 0 "D4" H 3491 6116 50  0000 C CNN
 F 1 "LED" H 3491 6025 50  0000 C CNN
-F 2 "" H 3500 5900 50  0001 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3500 5900 50  0001 C CNN
 F 3 "~" H 3500 5900 50  0001 C CNN
 	1    3500 5900
 	1    0    0    -1  
@@ -570,7 +570,7 @@ U 1 1 5D09F8E6
 P 3500 6550
 F 0 "D5" H 3491 6766 50  0000 C CNN
 F 1 "LED" H 3491 6675 50  0000 C CNN
-F 2 "" H 3500 6550 50  0001 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3500 6550 50  0001 C CNN
 F 3 "~" H 3500 6550 50  0001 C CNN
 	1    3500 6550
 	1    0    0    -1  
@@ -602,7 +602,7 @@ U 1 1 5D0A7E09
 P 3850 3950
 F 0 "R6" V 3950 3900 50  0000 L CNN
 F 1 "560" V 3850 3850 50  0000 L CNN
-F 2 "" V 3780 3950 50  0001 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 3780 3950 50  0001 C CNN
 F 3 "~" H 3850 3950 50  0001 C CNN
 	1    3850 3950
 	1    0    0    -1  
@@ -646,7 +646,7 @@ U 1 1 5D0CB5DD
 P 8750 4300
 F 0 "R7" H 8820 4346 50  0000 L CNN
 F 1 "60k" H 8820 4255 50  0000 L CNN
-F 2 "" V 8680 4300 50  0001 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 8680 4300 50  0001 C CNN
 F 3 "~" H 8750 4300 50  0001 C CNN
 	1    8750 4300
 	1    0    0    -1  
@@ -657,7 +657,7 @@ U 1 1 5D0CB64B
 P 8750 4750
 F 0 "R8" H 8820 4796 50  0000 L CNN
 F 1 "30k" H 8820 4705 50  0000 L CNN
-F 2 "" V 8680 4750 50  0001 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 8680 4750 50  0001 C CNN
 F 3 "~" H 8750 4750 50  0001 C CNN
 	1    8750 4750
 	1    0    0    -1  
@@ -668,7 +668,7 @@ U 1 1 5D0CB6CC
 P 8750 5250
 F 0 "Q6" H 8849 5296 50  0000 L CNN
 F 1 "SI2302" H 8849 5205 50  0000 L CNN
-F 2 "" H 8550 5550 50  0001 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 8550 5550 50  0001 C CNN
 F 3 "" H 8550 5550 50  0001 C CNN
 	1    8750 5250
 	1    0    0    -1  
@@ -689,7 +689,7 @@ Wire Wire Line
 Wire Wire Line
 	8750 4900 8750 5050
 Wire Wire Line
-	8750 5450 8750 5550
+	8750 5450 8750 5500
 Wire Wire Line
 	8500 4050 8750 4050
 Wire Wire Line
@@ -699,7 +699,7 @@ Vbat
 Text Label 7700 5250 0    50   ~ 0
 En_VoltageDivider
 Wire Wire Line
-	7700 5250 8450 5250
+	7700 5250 8150 5250
 Wire Wire Line
 	8750 4550 8500 4550
 Connection ~ 8750 4550
@@ -711,4 +711,27 @@ Text Notes 4900 3950 0    50   ~ 0
 The resistors forming the voltage divider \nare removed and external voltage divider \nis used with a low side N-MOS switch
 Text Notes 8100 3900 0    50   ~ 0
 External voltage divider \nwith precision resistors (0.1%)
+$Comp
+L Device:R R9
+U 1 1 5D0F6D0C
+P 8300 5500
+F 0 "R9" V 8400 5500 50  0000 C CNN
+F 1 "10k" V 8300 5500 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 8230 5500 50  0001 C CNN
+F 3 "~" H 8300 5500 50  0001 C CNN
+	1    8300 5500
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	8450 5500 8750 5500
+Connection ~ 8750 5500
+Wire Wire Line
+	8750 5500 8750 5550
+Wire Wire Line
+	8150 5500 8150 5250
+Connection ~ 8150 5250
+Wire Wire Line
+	8150 5250 8450 5250
+Text Label 3050 6550 0    50   ~ 0
+Ctrl5
 $EndSCHEMATC
