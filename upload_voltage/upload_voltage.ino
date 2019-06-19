@@ -28,27 +28,18 @@ void setup() {
   pinMode(DUT,OUTPUT);       //pin D8, load is the Device Under Test (DUT)
   pinMode(FLASH_BUTTON,INPUT_PULLUP);  //pin D3, to which the 'Flash' push button is connected.
   pinMode(EN_VOLTAGE_DIVIDER,OUTPUT);       //pin D6, gate of the mosfet
+  pinMode(LED,OUTPUT);       //set the inbuilt LED pin as Output
   
   turnOffAll();   //make sure all loads are off initially
+  led(1);        //turn on LED so that we get to know when it is ready to take inputs
+  io.connect();   // connect to io.adafruit.com
   
-  Serial.begin(115200);    //begin serial communication
-
-  while(! Serial);  // wait for serial monitor to open
-
-  // connect to io.adafruit.com
-  Serial.print("Connecting to Adafruit IO");
-  io.connect();
-
   // wait for a connection
   while(io.status() < AIO_CONNECTED) {
-    Serial.print(".");
     delay(500);
   }
-
+  
   // we are connected
-  Serial.println();
-  Serial.println(io.statusText());
-  Serial.println();
   loadSelect();
 }
 
@@ -62,9 +53,6 @@ void loop() {
   if(Vbat == last)
     return;     // return if the value hasn't changed
 
-  Serial.print("sending -> Vbat= ");
-  Serial.print(Vbat);
-  Serial.println(" V");
   analog->save(Vbat); // save the current state to the analog feed
   last = Vbat; // store last read Vbat
   delay(2000);  // wait two seconds
@@ -73,9 +61,7 @@ void loop() {
   if(last < VLowerCutOff)  {   //if the battery Vbat falls below the lower cut off
       ONCE_DISCHARGED = 1;         //clear the ONCE_DISCHARGED so that it does not oscillate when terminal Vbat rises slightly.
       turnOffAll();    //turn OFF ALL loads when batteries got fully discharged.
-      Serial.println();
-      Serial.println("Batteries got fully DISCHARGED...");
-      Serial.println();
+   
       while(1){
           delay(1000);  //do nothing    
        }

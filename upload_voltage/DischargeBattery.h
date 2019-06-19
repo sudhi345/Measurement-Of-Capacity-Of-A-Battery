@@ -4,7 +4,7 @@
 #define LOAD_047 13       //pin D7, load resistance of 047ohm
 #define DUT      15       //pin D8, load is the Device Under Test (DUT)
 #define FLASH_BUTTON 0    //pin D3, to which the 'Flash' push button is connected.
-#define LED_BUILTIN 2     //define the inbuilt led pin
+#define LED 2     //define the inbuilt led pin
 #define EN_VOLTAGE_DIVIDER 12 //pin D6 which drives the gate of a mosfet which enables the voltage divider for analog input.
 #define Vin A0  //input: battery voltage 
 const float VLowerCutOff = 2.1;  //define the lower cut off voltage or the end of discharge voltage for the battery
@@ -26,25 +26,6 @@ float readVoltage() {  //reads voltage at Vin by enabling the voltage divider
   v=analogRead(Vin);
   digitalWrite(EN_VOLTAGE_DIVIDER, LOW);
   return ((float(Vin_max - Vin_min)*v)/1024);
-}
-
-void loadSelect() {    //gets input from the user and attaches the load
-  while(1) {
-  while((! buttonPressed()) && (selected <= 0)) {
-    led(0);         //turn off led
-    delay(10);      //wait for some time (stops resetting the MCU)
-  }
-  if (buttonPressed()) {
-    selected++; 
-    if(selected==6) selected=1;     //if overflows, circularly change it!
-    blinky(selected);               //flash the led the number of times 'selected'
-    if(!digitalRead(FLASH_BUTTON)) {    //if still button is held pressed i.e. long press
-       attachLoad(selected);            //attach the load
-       break;                   //break from the while(1)
-    }
-  }
-  delay(10);
- }
 }
 
 boolean buttonPressed() {     //function to detect if the button is pressed
@@ -122,6 +103,25 @@ void attachLoad(int x) {      //function to attach the load on long press
 }
 
 void led(boolean y) {    //function to turn on or off LED
-  digitalWrite(LED,~y);
+  digitalWrite(LED,!y);
   return;
+}
+
+void loadSelect() {    //gets input from the user and attaches the load
+  while(1) {
+  while((! buttonPressed()) && (selected <= 0)) {
+    led(0);         //turn off led
+    delay(10);      //wait for some time (stops resetting the MCU)
+  }
+  if (buttonPressed()) {
+    selected++; 
+    if(selected==6) selected=1;     //if overflows, circularly change it!
+    blinky(selected);               //flash the led the number of times 'selected'
+    if(!digitalRead(FLASH_BUTTON)) {    //if still button is held pressed i.e. long press
+       attachLoad(selected);            //attach the load
+       break;                   //break from the while(1)
+    }
+  }
+  delay(10);
+ }
 }
