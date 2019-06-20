@@ -53,7 +53,12 @@ void loop() {
   if(Vbat == last)
     return;     // return if the value hasn't changed
   if(! (Vbat < VLowerCutOff)) {
-  analog->save(Vbat); // save the current state to the analog feed
+    if(io.status() < AIO_CONNECTED) {
+      //enqueue the values
+    }
+    else {
+      analog->save(Vbat); // save the current state to the analog feed
+    }
   last = Vbat; // store last read Vbat
   delay(2000);  // wait two seconds
   }
