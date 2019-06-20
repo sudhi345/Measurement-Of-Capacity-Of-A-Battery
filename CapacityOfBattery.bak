@@ -17,262 +17,262 @@ $EndDescr
 $Comp
 L Connector:Conn_01x02_Male J2
 U 1 1 5CF76A7D
-P 9150 2050
-F 0 "J2" H 9050 1950 50  0000 L CNN
-F 1 "DUT" H 9000 2050 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 9150 2050 50  0001 C CNN
-F 3 "~" H 9150 2050 50  0001 C CNN
-	1    9150 2050
+P 9500 1350
+F 0 "J2" H 9350 1250 50  0000 L CNN
+F 1 "DUT" H 9300 1350 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 9500 1350 50  0001 C CNN
+F 3 "~" H 9500 1350 50  0001 C CNN
+	1    9500 1350
 	-1   0    0    1   
 $EndComp
 $Comp
 L Connector:Conn_01x02_Male J1
 U 1 1 5CF7996A
-P 1850 2100
-F 0 "J1" H 1822 1980 50  0000 R CNN
-F 1 "BATTERY" H 1822 2071 50  0000 R CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 1850 2100 50  0001 C CNN
-F 3 "~" H 1850 2100 50  0001 C CNN
-	1    1850 2100
+P 8300 1350
+F 0 "J1" H 8250 1250 50  0000 R CNN
+F 1 "BATTERY" H 8250 1350 50  0000 R CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 8300 1350 50  0001 C CNN
+F 3 "~" H 8300 1350 50  0001 C CNN
+	1    8300 1350
 	-1   0    0    1   
 $EndComp
 $Comp
-L power:GND #PWR0108
+L power:GND #PWR04
 U 1 1 5CF7A0BA
-P 1500 2150
-F 0 "#PWR0108" H 1500 1900 50  0001 C CNN
-F 1 "GND" H 1505 1977 50  0000 C CNN
-F 2 "" H 1500 2150 50  0001 C CNN
-F 3 "" H 1500 2150 50  0001 C CNN
-	1    1500 2150
+P 7950 1400
+F 0 "#PWR04" H 7950 1150 50  0001 C CNN
+F 1 "GND" H 7955 1227 50  0000 C CNN
+F 2 "" H 7950 1400 50  0001 C CNN
+F 3 "" H 7950 1400 50  0001 C CNN
+	1    7950 1400
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	1500 2150 1500 2100
+	7950 1400 7950 1350
 Wire Wire Line
-	1500 2100 1650 2100
+	7950 1350 8100 1350
 Wire Wire Line
-	1650 2000 1400 2000
-Text Label 1400 2000 0    50   ~ 0
+	8100 1250 7850 1250
+Text Label 7850 1250 0    50   ~ 0
 Vbat
-Text Notes 3100 1200 0    50   ~ 0
+Text Notes 2400 1200 0    50   ~ 0
 Discharge Circuitry: Battery discharges through the resistor(s) selected by the MCU by giving active high signal on CtrlX.
-Text Notes 8950 2500 0    50   ~ 0
+Text Notes 9300 1700 0    50   ~ 0
 J2 is used to\nconnect the\nDevice Under Test.
-Text Notes 1850 2400 0    50   ~ 0
+Text Notes 8100 1650 0    50   ~ 0
 J1 is used to\nconnect the \nBattery [charged].
 $Comp
 L dk_Transistors-FETs-MOSFETs-Single:IRLML6401TRPBF Q1
 U 1 1 5D0475D2
-P 3600 2300
-F 0 "Q1" V 3750 2300 60  0000 L CNN
-F 1 "IRLML6401TRPBF" V 3850 1950 60  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 3800 2500 60  0001 L CNN
-F 3 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 3800 2600 60  0001 L CNN
-F 4 "IRLML6401PBFCT-ND" H 3800 2700 60  0001 L CNN "Digi-Key_PN"
-F 5 "IRLML6401TRPBF" H 3800 2800 60  0001 L CNN "MPN"
-F 6 "Discrete Semiconductor Products" H 3800 2900 60  0001 L CNN "Category"
-F 7 "Transistors - FETs, MOSFETs - Single" H 3800 3000 60  0001 L CNN "Family"
-F 8 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 3800 3100 60  0001 L CNN "DK_Datasheet_Link"
-F 9 "/product-detail/en/infineon-technologies/IRLML6401TRPBF/IRLML6401PBFCT-ND/812509" H 3800 3200 60  0001 L CNN "DK_Detail_Page"
-F 10 "MOSFET P-CH 12V 4.3A SOT-23" H 3800 3300 60  0001 L CNN "Description"
-F 11 "Infineon Technologies" H 3800 3400 60  0001 L CNN "Manufacturer"
-F 12 "Active" H 3800 3500 60  0001 L CNN "Status"
-	1    3600 2300
+P 2900 2300
+F 0 "Q1" V 3050 2300 60  0000 L CNN
+F 1 "IRLML6401TRPBF" V 3150 1950 60  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 3100 2500 60  0001 L CNN
+F 3 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 3100 2600 60  0001 L CNN
+F 4 "IRLML6401PBFCT-ND" H 3100 2700 60  0001 L CNN "Digi-Key_PN"
+F 5 "IRLML6401TRPBF" H 3100 2800 60  0001 L CNN "MPN"
+F 6 "Discrete Semiconductor Products" H 3100 2900 60  0001 L CNN "Category"
+F 7 "Transistors - FETs, MOSFETs - Single" H 3100 3000 60  0001 L CNN "Family"
+F 8 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 3100 3100 60  0001 L CNN "DK_Datasheet_Link"
+F 9 "/product-detail/en/infineon-technologies/IRLML6401TRPBF/IRLML6401PBFCT-ND/812509" H 3100 3200 60  0001 L CNN "DK_Detail_Page"
+F 10 "MOSFET P-CH 12V 4.3A SOT-23" H 3100 3300 60  0001 L CNN "Description"
+F 11 "Infineon Technologies" H 3100 3400 60  0001 L CNN "Manufacturer"
+F 12 "Active" H 3100 3500 60  0001 L CNN "Status"
+	1    2900 2300
 	1    0    0    1   
 $EndComp
 $Comp
 L dk_Transistors-FETs-MOSFETs-Single:IRLML6401TRPBF Q2
 U 1 1 5D0498F3
-P 4950 2350
-F 0 "Q2" V 5100 2350 60  0000 L CNN
-F 1 "IRLML6401TRPBF" V 5200 2050 60  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 5150 2550 60  0001 L CNN
-F 3 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 5150 2650 60  0001 L CNN
-F 4 "IRLML6401PBFCT-ND" H 5150 2750 60  0001 L CNN "Digi-Key_PN"
-F 5 "IRLML6401TRPBF" H 5150 2850 60  0001 L CNN "MPN"
-F 6 "Discrete Semiconductor Products" H 5150 2950 60  0001 L CNN "Category"
-F 7 "Transistors - FETs, MOSFETs - Single" H 5150 3050 60  0001 L CNN "Family"
-F 8 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 5150 3150 60  0001 L CNN "DK_Datasheet_Link"
-F 9 "/product-detail/en/infineon-technologies/IRLML6401TRPBF/IRLML6401PBFCT-ND/812509" H 5150 3250 60  0001 L CNN "DK_Detail_Page"
-F 10 "MOSFET P-CH 12V 4.3A SOT-23" H 5150 3350 60  0001 L CNN "Description"
-F 11 "Infineon Technologies" H 5150 3450 60  0001 L CNN "Manufacturer"
-F 12 "Active" H 5150 3550 60  0001 L CNN "Status"
-	1    4950 2350
+P 4250 2350
+F 0 "Q2" V 4400 2350 60  0000 L CNN
+F 1 "IRLML6401TRPBF" V 4500 2050 60  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 4450 2550 60  0001 L CNN
+F 3 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 4450 2650 60  0001 L CNN
+F 4 "IRLML6401PBFCT-ND" H 4450 2750 60  0001 L CNN "Digi-Key_PN"
+F 5 "IRLML6401TRPBF" H 4450 2850 60  0001 L CNN "MPN"
+F 6 "Discrete Semiconductor Products" H 4450 2950 60  0001 L CNN "Category"
+F 7 "Transistors - FETs, MOSFETs - Single" H 4450 3050 60  0001 L CNN "Family"
+F 8 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 4450 3150 60  0001 L CNN "DK_Datasheet_Link"
+F 9 "/product-detail/en/infineon-technologies/IRLML6401TRPBF/IRLML6401PBFCT-ND/812509" H 4450 3250 60  0001 L CNN "DK_Detail_Page"
+F 10 "MOSFET P-CH 12V 4.3A SOT-23" H 4450 3350 60  0001 L CNN "Description"
+F 11 "Infineon Technologies" H 4450 3450 60  0001 L CNN "Manufacturer"
+F 12 "Active" H 4450 3550 60  0001 L CNN "Status"
+	1    4250 2350
 	1    0    0    1   
 $EndComp
 $Comp
 L dk_Transistors-FETs-MOSFETs-Single:IRLML6401TRPBF Q3
 U 1 1 5D049929
-P 6300 2350
-F 0 "Q3" V 6450 2350 60  0000 L CNN
-F 1 "IRLML6401TRPBF" V 6550 2050 60  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 6500 2550 60  0001 L CNN
-F 3 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 6500 2650 60  0001 L CNN
-F 4 "IRLML6401PBFCT-ND" H 6500 2750 60  0001 L CNN "Digi-Key_PN"
-F 5 "IRLML6401TRPBF" H 6500 2850 60  0001 L CNN "MPN"
-F 6 "Discrete Semiconductor Products" H 6500 2950 60  0001 L CNN "Category"
-F 7 "Transistors - FETs, MOSFETs - Single" H 6500 3050 60  0001 L CNN "Family"
-F 8 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 6500 3150 60  0001 L CNN "DK_Datasheet_Link"
-F 9 "/product-detail/en/infineon-technologies/IRLML6401TRPBF/IRLML6401PBFCT-ND/812509" H 6500 3250 60  0001 L CNN "DK_Detail_Page"
-F 10 "MOSFET P-CH 12V 4.3A SOT-23" H 6500 3350 60  0001 L CNN "Description"
-F 11 "Infineon Technologies" H 6500 3450 60  0001 L CNN "Manufacturer"
-F 12 "Active" H 6500 3550 60  0001 L CNN "Status"
-	1    6300 2350
+P 5600 2350
+F 0 "Q3" V 5750 2350 60  0000 L CNN
+F 1 "IRLML6401TRPBF" V 5850 2050 60  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 5800 2550 60  0001 L CNN
+F 3 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 5800 2650 60  0001 L CNN
+F 4 "IRLML6401PBFCT-ND" H 5800 2750 60  0001 L CNN "Digi-Key_PN"
+F 5 "IRLML6401TRPBF" H 5800 2850 60  0001 L CNN "MPN"
+F 6 "Discrete Semiconductor Products" H 5800 2950 60  0001 L CNN "Category"
+F 7 "Transistors - FETs, MOSFETs - Single" H 5800 3050 60  0001 L CNN "Family"
+F 8 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 5800 3150 60  0001 L CNN "DK_Datasheet_Link"
+F 9 "/product-detail/en/infineon-technologies/IRLML6401TRPBF/IRLML6401PBFCT-ND/812509" H 5800 3250 60  0001 L CNN "DK_Detail_Page"
+F 10 "MOSFET P-CH 12V 4.3A SOT-23" H 5800 3350 60  0001 L CNN "Description"
+F 11 "Infineon Technologies" H 5800 3450 60  0001 L CNN "Manufacturer"
+F 12 "Active" H 5800 3550 60  0001 L CNN "Status"
+	1    5600 2350
 	1    0    0    1   
 $EndComp
 $Comp
-L dk_Transistors-FETs-MOSFETs-Single:IRLML6401TRPBF Q5
+L dk_Transistors-FETs-MOSFETs-Single:IRLML6401TRPBF Q4
 U 1 1 5D049986
-P 7600 2400
-F 0 "Q5" V 7750 2400 60  0000 L CNN
-F 1 "IRLML6401TRPBF" V 7850 2100 60  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 7800 2600 60  0001 L CNN
-F 3 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 7800 2700 60  0001 L CNN
-F 4 "IRLML6401PBFCT-ND" H 7800 2800 60  0001 L CNN "Digi-Key_PN"
-F 5 "IRLML6401TRPBF" H 7800 2900 60  0001 L CNN "MPN"
-F 6 "Discrete Semiconductor Products" H 7800 3000 60  0001 L CNN "Category"
-F 7 "Transistors - FETs, MOSFETs - Single" H 7800 3100 60  0001 L CNN "Family"
-F 8 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 7800 3200 60  0001 L CNN "DK_Datasheet_Link"
-F 9 "/product-detail/en/infineon-technologies/IRLML6401TRPBF/IRLML6401PBFCT-ND/812509" H 7800 3300 60  0001 L CNN "DK_Detail_Page"
-F 10 "MOSFET P-CH 12V 4.3A SOT-23" H 7800 3400 60  0001 L CNN "Description"
-F 11 "Infineon Technologies" H 7800 3500 60  0001 L CNN "Manufacturer"
-F 12 "Active" H 7800 3600 60  0001 L CNN "Status"
-	1    7600 2400
+P 6900 2400
+F 0 "Q4" V 7050 2400 60  0000 L CNN
+F 1 "IRLML6401TRPBF" V 7150 2100 60  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 7100 2600 60  0001 L CNN
+F 3 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 7100 2700 60  0001 L CNN
+F 4 "IRLML6401PBFCT-ND" H 7100 2800 60  0001 L CNN "Digi-Key_PN"
+F 5 "IRLML6401TRPBF" H 7100 2900 60  0001 L CNN "MPN"
+F 6 "Discrete Semiconductor Products" H 7100 3000 60  0001 L CNN "Category"
+F 7 "Transistors - FETs, MOSFETs - Single" H 7100 3100 60  0001 L CNN "Family"
+F 8 "https://www.infineon.com/dgdl/irlml6401pbf.pdf?fileId=5546d462533600a401535668b96d2634" H 7100 3200 60  0001 L CNN "DK_Datasheet_Link"
+F 9 "/product-detail/en/infineon-technologies/IRLML6401TRPBF/IRLML6401PBFCT-ND/812509" H 7100 3300 60  0001 L CNN "DK_Detail_Page"
+F 10 "MOSFET P-CH 12V 4.3A SOT-23" H 7100 3400 60  0001 L CNN "Description"
+F 11 "Infineon Technologies" H 7100 3500 60  0001 L CNN "Manufacturer"
+F 12 "Active" H 7100 3600 60  0001 L CNN "Status"
+	1    6900 2400
 	1    0    0    1   
 $EndComp
 $Comp
 L Device:R R1
 U 1 1 5D049AF0
-P 3200 1800
-F 0 "R1" V 3300 1750 50  0000 L CNN
-F 1 "100k" V 3200 1700 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 3130 1800 50  0001 C CNN
-F 3 "~" H 3200 1800 50  0001 C CNN
-	1    3200 1800
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R2
-U 1 1 5D049D17
-P 4550 1850
-F 0 "R2" V 4650 1800 50  0000 L CNN
-F 1 "100k" V 4550 1750 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 4480 1850 50  0001 C CNN
-F 3 "~" H 4550 1850 50  0001 C CNN
-	1    4550 1850
+P 2500 1800
+F 0 "R1" V 2600 1750 50  0000 L CNN
+F 1 "100k" V 2500 1700 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 2430 1800 50  0001 C CNN
+F 3 "~" H 2500 1800 50  0001 C CNN
+	1    2500 1800
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R R3
+U 1 1 5D049D17
+P 3850 1850
+F 0 "R3" V 3950 1800 50  0000 L CNN
+F 1 "100k" V 3850 1750 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 3780 1850 50  0001 C CNN
+F 3 "~" H 3850 1850 50  0001 C CNN
+	1    3850 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R4
 U 1 1 5D049D3D
-P 5900 1850
-F 0 "R3" V 6000 1800 50  0000 L CNN
-F 1 "100k" V 5900 1750 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 5830 1850 50  0001 C CNN
-F 3 "~" H 5900 1850 50  0001 C CNN
-	1    5900 1850
+P 5200 1850
+F 0 "R4" V 5300 1800 50  0000 L CNN
+F 1 "100k" V 5200 1750 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 5130 1850 50  0001 C CNN
+F 3 "~" H 5200 1850 50  0001 C CNN
+	1    5200 1850
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R R5
 U 1 1 5D049D82
-P 7200 1900
-F 0 "R5" V 7300 1850 50  0000 L CNN
-F 1 "100k" V 7200 1800 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 7130 1900 50  0001 C CNN
-F 3 "~" H 7200 1900 50  0001 C CNN
-	1    7200 1900
+P 6500 1900
+F 0 "R5" V 6600 1850 50  0000 L CNN
+F 1 "100k" V 6500 1800 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 6430 1900 50  0001 C CNN
+F 3 "~" H 6500 1900 50  0001 C CNN
+	1    6500 1900
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R RL1
 U 1 1 5D049E89
-P 3600 2750
-F 0 "RL1" V 3700 2700 50  0000 L CNN
-F 1 "560" V 3600 2650 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 3530 2750 50  0001 C CNN
-F 3 "~" H 3600 2750 50  0001 C CNN
-	1    3600 2750
+P 2900 2750
+F 0 "RL1" V 3000 2700 50  0000 L CNN
+F 1 "560" V 2900 2650 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 2830 2750 50  0001 C CNN
+F 3 "~" H 2900 2750 50  0001 C CNN
+	1    2900 2750
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R RL2
 U 1 1 5D049EE8
-P 4950 2800
-F 0 "RL2" V 5050 2750 50  0000 L CNN
-F 1 "232" V 4950 2700 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 4880 2800 50  0001 C CNN
-F 3 "~" H 4950 2800 50  0001 C CNN
-	1    4950 2800
+P 4250 2800
+F 0 "RL2" V 4350 2750 50  0000 L CNN
+F 1 "232" V 4250 2700 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 4180 2800 50  0001 C CNN
+F 3 "~" H 4250 2800 50  0001 C CNN
+	1    4250 2800
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R RL3
 U 1 1 5D049F1F
-P 6300 2800
-F 0 "RL3" V 6400 2750 50  0000 L CNN
-F 1 "116" V 6300 2700 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 6230 2800 50  0001 C CNN
-F 3 "~" H 6300 2800 50  0001 C CNN
-	1    6300 2800
+P 5600 2800
+F 0 "RL3" V 5700 2750 50  0000 L CNN
+F 1 "116" V 5600 2700 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 5530 2800 50  0001 C CNN
+F 3 "~" H 5600 2800 50  0001 C CNN
+	1    5600 2800
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3600 2900 3600 3000
+	2900 2900 2900 3000
 Wire Wire Line
-	4950 2950 4950 3050
+	4250 2950 4250 3050
 Wire Wire Line
-	6300 2950 6300 3050
+	5600 2950 5600 3050
 Wire Wire Line
-	3200 1950 3200 2200
+	2500 1950 2500 2200
 Wire Wire Line
-	3200 2200 3300 2200
+	2500 2200 2600 2200
 Wire Wire Line
-	4650 2250 4550 2250
+	3950 2250 3850 2250
 Wire Wire Line
-	4550 2250 4550 2000
+	3850 2250 3850 2000
 Wire Wire Line
-	6000 2250 5900 2250
+	5300 2250 5200 2250
 Wire Wire Line
-	5900 2250 5900 2000
+	5200 2250 5200 2000
 Wire Wire Line
-	7300 2300 7200 2300
+	6600 2300 6500 2300
 Wire Wire Line
-	7200 2300 7200 2050
+	6500 2300 6500 2050
 $Comp
-L power:GND #PWR0105
+L power:GND #PWR05
 U 1 1 5D04B406
-P 8750 2100
-F 0 "#PWR0105" H 8750 1850 50  0001 C CNN
-F 1 "GND" H 8755 1927 50  0000 C CNN
-F 2 "" H 8750 2100 50  0001 C CNN
-F 3 "" H 8750 2100 50  0001 C CNN
-	1    8750 2100
+P 9100 1400
+F 0 "#PWR05" H 9100 1150 50  0001 C CNN
+F 1 "GND" H 9105 1227 50  0000 C CNN
+F 2 "" H 9100 1400 50  0001 C CNN
+F 3 "" H 9100 1400 50  0001 C CNN
+	1    9100 1400
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3000 2200 3200 2200
-Connection ~ 3200 2200
-Connection ~ 4550 2250
-Connection ~ 5900 2250
-Connection ~ 7200 2300
+	2300 2200 2500 2200
+Connection ~ 2500 2200
+Connection ~ 3850 2250
+Connection ~ 5200 2250
+Connection ~ 6500 2300
 Wire Wire Line
-	8750 2050 8750 2100
-Text Label 3000 2200 0    50   ~ 0
+	9100 1350 9100 1400
+Text Label 2300 2200 0    50   ~ 0
 Ctrl1
-Text Label 4350 2250 0    50   ~ 0
+Text Label 3650 2250 0    50   ~ 0
 Ctrl2
 Wire Wire Line
-	4350 2250 4550 2250
+	3650 2250 3850 2250
 Wire Wire Line
-	5700 2250 5900 2250
-Text Label 5700 2250 0    50   ~ 0
+	5000 2250 5200 2250
+Text Label 5000 2250 0    50   ~ 0
 Ctrl3
 Wire Wire Line
-	7000 2300 7200 2300
-Text Label 7000 2300 0    50   ~ 0
-Ctrl5
+	6300 2300 6500 2300
+Text Label 6300 2300 0    50   ~ 0
+Ctrl4
 $Comp
 L ESP8266:NodeMCU1.0(ESP-12E) U1
 U 1 1 5D05B443
@@ -285,15 +285,13 @@ F 3 "" H 5100 4250 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6750 4400 6500 4400
+	6750 5600 6500 5600
 Wire Wire Line
-	6750 4500 6500 4500
-Wire Wire Line
-	6750 4600 6500 4600
-Wire Wire Line
-	6750 5300 6500 5300
+	6750 5500 6500 5500
 Wire Wire Line
 	6750 5400 6500 5400
+Wire Wire Line
+	6750 5300 6500 5300
 Wire Wire Line
 	4650 5400 4900 5400
 Wire Wire Line
@@ -302,15 +300,13 @@ Text Label 4650 4400 0    50   ~ 0
 Vin
 Text Label 4650 5400 0    50   ~ 0
 Vcc
-Text Label 6750 5400 2    50   ~ 0
-Ctrl5
 Text Label 6750 5300 2    50   ~ 0
 Ctrl4
-Text Label 6750 4600 2    50   ~ 0
+Text Label 6750 5400 2    50   ~ 0
 Ctrl3
-Text Label 6750 4500 2    50   ~ 0
+Text Label 6750 5500 2    50   ~ 0
 Ctrl2
-Text Label 6750 4400 2    50   ~ 0
+Text Label 6750 5600 2    50   ~ 0
 Ctrl1
 NoConn ~ 4900 5200
 NoConn ~ 4900 5100
@@ -382,10 +378,10 @@ Wire Wire Line
 Wire Wire Line
 	3400 4300 3600 4300
 $Comp
-L Device:R R6
+L Device:R R2
 U 1 1 5D0A7E09
 P 3600 4000
-F 0 "R6" V 3700 3950 50  0000 L CNN
+F 0 "R2" V 3700 3950 50  0000 L CNN
 F 1 "560" V 3600 3900 50  0000 L CNN
 F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 3530 4000 50  0001 C CNN
 F 3 "~" H 3600 4000 50  0001 C CNN
@@ -436,10 +432,10 @@ F 3 "~" H 8750 4750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Transistor_FET_SI2302:SI2302 Q6
+L Transistor_FET_SI2302:SI2302 Q5
 U 1 1 5D0CB6CC
 P 8750 5250
-F 0 "Q6" H 8849 5296 50  0000 L CNN
+F 0 "Q5" H 8849 5296 50  0000 L CNN
 F 1 "SI2302" H 8849 5205 50  0000 L CNN
 F 2 "Package_TO_SOT_SMD:SOT-23" H 8550 5550 50  0001 C CNN
 F 3 "" H 8550 5550 50  0001 C CNN
@@ -447,10 +443,10 @@ F 3 "" H 8550 5550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR0107
+L power:GND #PWR06
 U 1 1 5D0CB735
 P 8750 5550
-F 0 "#PWR0107" H 8750 5300 50  0001 C CNN
+F 0 "#PWR06" H 8750 5300 50  0001 C CNN
 F 1 "GND" H 8755 5377 50  0000 C CNN
 F 2 "" H 8750 5550 50  0001 C CNN
 F 3 "" H 8750 5550 50  0001 C CNN
@@ -483,10 +479,10 @@ The resistors forming the voltage divider \nare removed and external voltage div
 Text Notes 8100 3900 0    50   ~ 0
 External voltage divider \nwith precision resistors (0.1%)
 $Comp
-L Device:R R9
+L Device:R R6
 U 1 1 5D0F6D0C
 P 8300 5500
-F 0 "R9" V 8400 5500 50  0000 C CNN
+F 0 "R6" V 8400 5500 50  0000 C CNN
 F 1 "10k" V 8300 5500 50  0000 C CNN
 F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 8230 5500 50  0001 C CNN
 F 3 "~" H 8300 5500 50  0001 C CNN
@@ -503,85 +499,85 @@ Wire Wire Line
 Wire Wire Line
 	8150 5250 8450 5250
 Wire Wire Line
-	3600 2500 3600 2600
+	2900 2500 2900 2600
 Wire Wire Line
-	4950 2550 4950 2650
+	4250 2550 4250 2650
 Wire Wire Line
-	6300 2550 6300 2650
+	5600 2550 5600 2650
 Wire Wire Line
-	3200 1450 3200 1650
-Text Label 3200 1450 3    50   ~ 0
+	2500 1450 2500 1650
+Text Label 2500 1450 3    50   ~ 0
 Vcc
 $Comp
-L power:GND #PWR?
+L power:GND #PWR03
 U 1 1 5D0F8C5F
-P 6300 3050
-F 0 "#PWR?" H 6300 2800 50  0001 C CNN
-F 1 "GND" H 6305 2877 50  0000 C CNN
-F 2 "" H 6300 3050 50  0001 C CNN
-F 3 "" H 6300 3050 50  0001 C CNN
-	1    6300 3050
+P 5600 3050
+F 0 "#PWR03" H 5600 2800 50  0001 C CNN
+F 1 "GND" H 5605 2877 50  0000 C CNN
+F 2 "" H 5600 3050 50  0001 C CNN
+F 3 "" H 5600 3050 50  0001 C CNN
+	1    5600 3050
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR?
+L power:GND #PWR02
 U 1 1 5D0FA0DF
-P 4950 3050
-F 0 "#PWR?" H 4950 2800 50  0001 C CNN
-F 1 "GND" H 4955 2877 50  0000 C CNN
-F 2 "" H 4950 3050 50  0001 C CNN
-F 3 "" H 4950 3050 50  0001 C CNN
-	1    4950 3050
+P 4250 3050
+F 0 "#PWR02" H 4250 2800 50  0001 C CNN
+F 1 "GND" H 4255 2877 50  0000 C CNN
+F 2 "" H 4250 3050 50  0001 C CNN
+F 3 "" H 4250 3050 50  0001 C CNN
+	1    4250 3050
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR?
+L power:GND #PWR01
 U 1 1 5D0FB55F
-P 3600 3000
-F 0 "#PWR?" H 3600 2750 50  0001 C CNN
-F 1 "GND" H 3605 2827 50  0000 C CNN
-F 2 "" H 3600 3000 50  0001 C CNN
-F 3 "" H 3600 3000 50  0001 C CNN
-	1    3600 3000
+P 2900 3000
+F 0 "#PWR01" H 2900 2750 50  0001 C CNN
+F 1 "GND" H 2905 2827 50  0000 C CNN
+F 2 "" H 2900 3000 50  0001 C CNN
+F 3 "" H 2900 3000 50  0001 C CNN
+	1    2900 3000
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	4550 1500 4550 1700
+	3850 1500 3850 1700
 Wire Wire Line
-	5900 1450 5900 1700
-Text Label 4550 1500 3    50   ~ 0
+	5200 1450 5200 1700
+Text Label 3850 1500 3    50   ~ 0
 Vcc
-Text Label 5900 1450 3    50   ~ 0
-Vcc
-Wire Wire Line
-	7200 1450 7200 1750
-Text Label 7200 1450 3    50   ~ 0
+Text Label 5200 1450 3    50   ~ 0
 Vcc
 Wire Wire Line
-	3600 1850 3600 2100
+	6500 1450 6500 1750
+Text Label 6500 1450 3    50   ~ 0
+Vcc
 Wire Wire Line
-	4950 1900 4950 2150
+	2900 1850 2900 2100
 Wire Wire Line
-	6300 1850 6300 2150
+	4250 1900 4250 2150
 Wire Wire Line
-	7600 1850 7600 2200
-Text Label 3600 1850 3    50   ~ 0
+	5600 1850 5600 2150
+Wire Wire Line
+	6900 1850 6900 2200
+Text Label 2900 1850 3    50   ~ 0
 Vbat
-Text Label 4950 1900 3    50   ~ 0
+Text Label 4250 1900 3    50   ~ 0
 Vbat
-Text Label 6300 1850 3    50   ~ 0
+Text Label 5600 1850 3    50   ~ 0
 Vbat
-Text Label 7600 1850 3    50   ~ 0
+Text Label 6900 1850 3    50   ~ 0
 Vbat
 Wire Wire Line
-	8750 2050 8950 2050
+	9100 1350 9300 1350
 Wire Wire Line
-	8950 1950 8750 1950
+	9300 1250 9100 1250
 Wire Wire Line
-	7600 2600 7600 2900
-Text Label 7600 2900 1    50   ~ 0
+	6900 2600 6900 2900
+Text Label 6900 2900 1    50   ~ 0
 dut
-Text Label 8750 1950 0    50   ~ 0
+Text Label 9100 1250 0    50   ~ 0
 dut
 Wire Wire Line
 	4650 4500 4900 4500
@@ -605,15 +601,15 @@ Wire Wire Line
 Text Label 6750 5700 2    50   ~ 0
 GND
 Wire Wire Line
-	6750 5100 6500 5100
-Wire Wire Line
-	6750 5500 6500 5500
-Wire Wire Line
-	6750 5600 6500 5600
-Wire Wire Line
 	4650 4700 4900 4700
 Wire Wire Line
-	4650 4800 4900 4800
+	6750 4500 6500 4500
+Wire Wire Line
+	6750 4400 6500 4400
+Wire Wire Line
+	6750 5100 6500 5100
+Wire Wire Line
+	6750 4600 6500 4600
 Wire Wire Line
 	4650 5700 4900 5700
 Wire Wire Line
@@ -622,19 +618,78 @@ Text Label 4650 5300 0    50   ~ 0
 GND
 Text Label 4650 5700 0    50   ~ 0
 GND
-Text Label 6750 5600 2    50   ~ 0
+Text Label 6750 4400 2    50   ~ 0
 LED1
-Text Label 6750 5500 2    50   ~ 0
+Text Label 6750 4500 2    50   ~ 0
 LED2
-Text Label 4650 4800 0    50   ~ 0
+Text Label 6750 4600 2    50   ~ 0
 LED3
-Text Label 4650 4700 0    50   ~ 0
-LED4
 Text Label 6750 5100 2    50   ~ 0
+LED4
+Text Label 4650 4700 0    50   ~ 0
 SW
 Wire Wire Line
 	6500 5200 6750 5200
 Connection ~ 8150 5250
 Wire Wire Line
 	7900 5250 8150 5250
+Text Label 2800 4300 0    50   ~ 0
+LED1
+Text Label 2800 4800 0    50   ~ 0
+LED2
+Text Label 2800 5350 0    50   ~ 0
+LED3
+Text Label 2800 5950 0    50   ~ 0
+LED4
+NoConn ~ 4900 4800
+$Comp
+L Switch:SW_Push SW1
+U 1 1 5D1A9804
+P 8800 2450
+F 0 "SW1" V 8754 2598 50  0000 L CNN
+F 1 "SW_Push" V 8845 2598 50  0000 L CNN
+F 2 "" H 8800 2650 50  0001 C CNN
+F 3 "" H 8800 2650 50  0001 C CNN
+	1    8800 2450
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R9
+U 1 1 5D1A9944
+P 8800 2950
+F 0 "R9" H 8870 2996 50  0000 L CNN
+F 1 "1k" H 8870 2905 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 8730 2950 50  0001 C CNN
+F 3 "~" H 8800 2950 50  0001 C CNN
+	1    8800 2950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8800 2000 8800 2250
+Wire Wire Line
+	8800 2650 8800 2700
+$Comp
+L power:GND #PWR0101
+U 1 1 5D1B375E
+P 8800 3200
+F 0 "#PWR0101" H 8800 2950 50  0001 C CNN
+F 1 "GND" H 8805 3027 50  0000 C CNN
+F 2 "" H 8800 3200 50  0001 C CNN
+F 3 "" H 8800 3200 50  0001 C CNN
+	1    8800 3200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8800 3100 8800 3200
+Wire Wire Line
+	8450 2700 8800 2700
+Connection ~ 8800 2700
+Wire Wire Line
+	8800 2700 8800 2800
+Text Label 8800 2000 3    50   ~ 0
+Vcc
+Text Label 8450 2700 0    50   ~ 0
+SW
+Text Notes 9050 2850 0    50   ~ 0
+A switch is used \nto select the load\n(Active HIGH)
 $EndSCHEMATC
