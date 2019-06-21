@@ -8,7 +8,7 @@ Sheet 1 1
 Title "Measurement of capacity of a battery"
 Date "2019-06-04"
 Rev "-"
-Comp ""
+Comp "Appiko"
 Comment1 ""
 Comment2 ""
 Comment3 ""
