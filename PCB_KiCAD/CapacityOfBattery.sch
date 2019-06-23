@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:CapacityOfBattery-cache
 EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
@@ -317,96 +316,6 @@ NoConn ~ 6500 4800
 NoConn ~ 4900 5800
 NoConn ~ 4900 5500
 NoConn ~ 4900 5600
-$Comp
-L Device:LED D1
-U 1 1 5D09C200
-P 3250 4300
-F 0 "D1" H 3241 4516 50  0000 C CNN
-F 1 "LED" H 3241 4425 50  0000 C CNN
-F 2 "lib_fp:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3250 4300 50  0001 C CNN
-F 3 "~" H 3250 4300 50  0001 C CNN
-	1    3250 4300
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:LED D2
-U 1 1 5D09C297
-P 3250 4800
-F 0 "D2" H 3241 5016 50  0000 C CNN
-F 1 "LED" H 3241 4925 50  0000 C CNN
-F 2 "lib_fp:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3250 4800 50  0001 C CNN
-F 3 "~" H 3250 4800 50  0001 C CNN
-	1    3250 4800
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:LED D3
-U 1 1 5D09D4AF
-P 3250 5350
-F 0 "D3" H 3241 5566 50  0000 C CNN
-F 1 "LED" H 3241 5475 50  0000 C CNN
-F 2 "lib_fp:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3250 5350 50  0001 C CNN
-F 3 "~" H 3250 5350 50  0001 C CNN
-	1    3250 5350
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:LED D4
-U 1 1 5D09E6D2
-P 3250 5950
-F 0 "D4" H 3241 6166 50  0000 C CNN
-F 1 "LED" H 3241 6075 50  0000 C CNN
-F 2 "lib_fp:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3250 5950 50  0001 C CNN
-F 3 "~" H 3250 5950 50  0001 C CNN
-	1    3250 5950
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3400 5950 3600 5950
-Wire Wire Line
-	3600 4300 3600 4800
-Wire Wire Line
-	3400 5350 3600 5350
-Connection ~ 3600 5350
-Wire Wire Line
-	3600 5350 3600 5950
-Wire Wire Line
-	3400 4800 3600 4800
-Connection ~ 3600 4800
-Wire Wire Line
-	3600 4800 3600 5350
-Wire Wire Line
-	3400 4300 3600 4300
-$Comp
-L Device:R R2
-U 1 1 5D0A7E09
-P 3600 4000
-F 0 "R2" V 3700 3950 50  0000 L CNN
-F 1 "560" V 3600 3900 50  0000 L CNN
-F 2 "lib_fp:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 3530 4000 50  0001 C CNN
-F 3 "~" H 3600 4000 50  0001 C CNN
-	1    3600 4000
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3600 4150 3600 4300
-Connection ~ 3600 4300
-Wire Wire Line
-	3600 3850 3600 3750
-Wire Wire Line
-	3600 3750 3350 3750
-Wire Wire Line
-	2800 4300 3100 4300
-Wire Wire Line
-	2800 4800 3100 4800
-Wire Wire Line
-	2800 5350 3100 5350
-Wire Wire Line
-	2800 5950 3100 5950
-Text Label 3350 3750 0    50   ~ 0
-Vcc
-Text Notes 2550 3950 0    50   ~ 0
-LEDs are used \nto indicate the \nselected load.
 Text Label 6750 5200 2    50   ~ 0
 En_VD
 $Comp
@@ -572,7 +481,6 @@ Wire Wire Line
 	4650 4500 4900 4500
 Text Label 4650 4500 0    50   ~ 0
 GND
-NoConn ~ 6500 4700
 Wire Wire Line
 	6500 4900 6750 4900
 Text Label 6750 4900 2    50   ~ 0
@@ -590,7 +498,7 @@ Wire Wire Line
 Text Label 6750 5700 2    50   ~ 0
 GND
 Wire Wire Line
-	4650 4700 4900 4700
+	6750 4700 6500 4700
 Wire Wire Line
 	6750 4500 6500 4500
 Wire Wire Line
@@ -615,21 +523,13 @@ Text Label 6750 4600 2    50   ~ 0
 LED3
 Text Label 6750 5100 2    50   ~ 0
 LED4
-Text Label 4650 4700 0    50   ~ 0
+Text Label 6750 4700 2    50   ~ 0
 SW
 Wire Wire Line
 	6500 5200 6750 5200
 Connection ~ 8150 5600
 Wire Wire Line
 	7900 5600 8150 5600
-Text Label 2800 4300 0    50   ~ 0
-LED1
-Text Label 2800 4800 0    50   ~ 0
-LED2
-Text Label 2800 5350 0    50   ~ 0
-LED3
-Text Label 2800 5950 0    50   ~ 0
-LED4
 NoConn ~ 4900 4800
 $Comp
 L Switch:SW_Push SW1
@@ -746,45 +646,75 @@ Wire Wire Line
 $Comp
 L Mechanical:MountingHole H1
 U 1 1 5D0C9E38
-P 1500 3600
-F 0 "H1" H 1600 3646 50  0000 L CNN
-F 1 "MountingHole" H 1600 3555 50  0000 L CNN
-F 2 "lib_fp:MountingHole_3.2mm_M3_ISO7380" H 1500 3600 50  0001 C CNN
-F 3 "~" H 1500 3600 50  0001 C CNN
-	1    1500 3600
+P 2800 4000
+F 0 "H1" H 2900 4046 50  0000 L CNN
+F 1 "MountingHole" H 2900 3955 50  0000 L CNN
+F 2 "lib_fp:MountingHole_3.2mm_M3_ISO7380" H 2800 4000 50  0001 C CNN
+F 3 "~" H 2800 4000 50  0001 C CNN
+	1    2800 4000
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H2
 U 1 1 5D0C9EE2
-P 1500 3850
-F 0 "H2" H 1600 3896 50  0000 L CNN
-F 1 "MountingHole" H 1600 3805 50  0000 L CNN
-F 2 "lib_fp:MountingHole_3.2mm_M3_ISO7380" H 1500 3850 50  0001 C CNN
-F 3 "~" H 1500 3850 50  0001 C CNN
-	1    1500 3850
+P 2800 4250
+F 0 "H2" H 2900 4296 50  0000 L CNN
+F 1 "MountingHole" H 2900 4205 50  0000 L CNN
+F 2 "lib_fp:MountingHole_3.2mm_M3_ISO7380" H 2800 4250 50  0001 C CNN
+F 3 "~" H 2800 4250 50  0001 C CNN
+	1    2800 4250
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H3
 U 1 1 5D0CC0E0
-P 1500 4100
-F 0 "H3" H 1600 4146 50  0000 L CNN
-F 1 "MountingHole" H 1600 4055 50  0000 L CNN
-F 2 "lib_fp:MountingHole_3.2mm_M3_ISO7380" H 1500 4100 50  0001 C CNN
-F 3 "~" H 1500 4100 50  0001 C CNN
-	1    1500 4100
+P 2800 4500
+F 0 "H3" H 2900 4546 50  0000 L CNN
+F 1 "MountingHole" H 2900 4455 50  0000 L CNN
+F 2 "lib_fp:MountingHole_3.2mm_M3_ISO7380" H 2800 4500 50  0001 C CNN
+F 3 "~" H 2800 4500 50  0001 C CNN
+	1    2800 4500
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H4
 U 1 1 5D0CE2E5
-P 1500 4350
-F 0 "H4" H 1600 4396 50  0000 L CNN
-F 1 "MountingHole" H 1600 4305 50  0000 L CNN
-F 2 "lib_fp:MountingHole_3.2mm_M3_ISO7380" H 1500 4350 50  0001 C CNN
-F 3 "~" H 1500 4350 50  0001 C CNN
-	1    1500 4350
+P 2800 4750
+F 0 "H4" H 2900 4796 50  0000 L CNN
+F 1 "MountingHole" H 2900 4705 50  0000 L CNN
+F 2 "lib_fp:MountingHole_3.2mm_M3_ISO7380" H 2800 4750 50  0001 C CNN
+F 3 "~" H 2800 4750 50  0001 C CNN
+	1    2800 4750
 	1    0    0    -1  
 $EndComp
+$Comp
+L Connector:Conn_01x04_Male J3
+U 1 1 5D0F9A0A
+P 2950 5550
+F 0 "J3" H 3056 5828 50  0000 C CNN
+F 1 "Conn_01x04_Male" H 3056 5737 50  0000 C CNN
+F 2 "" H 2950 5550 50  0001 C CNN
+F 3 "~" H 2950 5550 50  0001 C CNN
+	1    2950 5550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3150 5450 3450 5450
+Wire Wire Line
+	3450 5550 3150 5550
+Wire Wire Line
+	3450 5650 3150 5650
+Wire Wire Line
+	3450 5750 3150 5750
+Text Label 3450 5450 2    50   ~ 0
+GND
+Text Label 3450 5550 2    50   ~ 0
+Vcc
+Text Label 3450 5650 2    50   ~ 0
+SCL
+Text Label 3450 5750 2    50   ~ 0
+SDA
+NoConn ~ 4900 4700
+Text Notes 3550 6100 2    50   ~ 0
+J3 is used to interface \nOLED display using I2C \ncommunication.
 $EndSCHEMATC

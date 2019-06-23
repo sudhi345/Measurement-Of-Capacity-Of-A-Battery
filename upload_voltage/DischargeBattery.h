@@ -1,22 +1,58 @@
-#define LOAD_560 16       //pin D0, load resistance of 560ohm
-#define LOAD_232 5        //pin D1, load resistance of 232ohm
-#define LOAD_116 4        //pin D2, load resistance of 116ohm
-#define LOAD_047 13       //pin D7, load resistance of 047ohm
-#define DUT      15       //pin D8, load is the Device Under Test (DUT)
-#define FLASH_BUTTON 0    //pin D3, to which the 'Flash' push button is connected.
-#define LED 2     //define the inbuilt led pin
+#define BUFF_SIZE 10000   //max size of the buffer
+#define LOAD1 1        //load resistance of 564ohm
+#define LOAD2 3        //load resistance of 232ohm
+#define LOAD3 15       //load resistance of 116ohm
+#define DUT      13       //load is the Device Under Test (DUT)
+#define FLASH_BUTTON 0    //pin to which the 'Flash' push button is connected.
+#define LED0 2            //define the inbuilt led pin
+#define LED1 16           //define the led for load 1
+#define LED2 5            //define the led for load 2
+#define LED3 4            //define the led for load 3
+#define LED4 14           //define the led for load 4
+#define SW   9           //define the pin connected to the push button
 #define EN_VOLTAGE_DIVIDER 12 //pin D6 which drives the gate of a mosfet which enables the voltage divider for analog input.
-#define Vin A0  //input: battery voltage 
+#define Vin A0            //input: battery voltage 
+const boolean ON = 1;
+const boolean OFF = 0;
 const float VLowerCutOff = 2.1;  //define the lower cut off voltage or the end of discharge voltage for the battery
 const int Vin_max = 3;           //maximum voltage that can be given as analog input
 const int Vin_min = 0;           //minimum voltage that can be given as analog input
 int selected = 0;                //to store the previously selected load
+int front;                       //front index of queue (next empty location)
+int rear;                        //rear index of queue  (first filled location)
+float Queue[BUFF_SIZE];           //buffer stucture for storing the values if connection is lost
 
-void turnOffAll() {     //turns off all the loads
-  digitalWrite(LOAD_560,HIGH);
-  digitalWrite(LOAD_232,HIGH);
-  digitalWrite(LOAD_116,HIGH);
-  digitalWrite(LOAD_047,HIGH);
+void queueInit() {     //initialize pointers (queue is empty)
+  front = 0;
+  rear = 0;
+}
+
+void enqueue(float V) {   //write a value to the buffer
+  if( front == (BUFF_SIZE - 1) )    //if queue is full
+    front = 0;                      //store again in first position (circular behavior)
+  Queue[front] = V;                  
+  front++;                          //increment to point to next empty location
+}
+
+float dequeue() {     //read value from the buffer
+  float val;
+  if( rear == front ) {  //queue has only one value
+    val = Queue[rear];   //store value in a temporay variable
+    queueInit();         //re-initialize 
+  }
+  else {
+    val = Queue[rear];
+    rear++; //increment rear to point to next filled location
+    if ( rear == BUFF_SIZE )
+      rear = 0;   //if overflows set it back to 0 (circular behavior)
+  }
+  return val;
+}
+
+void turnOffAllLoad() {     //turns off all the loads
+  digitalWrite(LOAD1,HIGH);
+  digitalWrite(LOAD2,HIGH);
+  digitalWrite(LOAD3,HIGH);
   digitalWrite(DUT,HIGH);
 }
 
@@ -28,21 +64,31 @@ float readVoltage() {  //reads voltage at Vin by enabling the voltage divider
   return ((float(Vin_max - Vin_min)*v)/1024);
 }
 
-boolean buttonPressed() {     //function to detect if the button is pressed
-  if(!digitalRead(FLASH_BUTTON)) {       //if button is pressed it gives '0' on the pin
+int buttonPressed() {     //function to detect if the button is pressed / not pressed / long pressed 
+  long int EndTime0, StartTime0;
+  StartTime0 = millis();
+  if(digitalRead(SW)) {       //if button is pressed it gives 'HIGH' on the pin
     delay(10);                //debounce
-    if( ! digitalRead(FLASH_BUTTON))     //verify again
-        return 1;
-    else return 0;
+    if(digitalRead(SW)) {     //verify again
+        while(digitalRead(SW)) {    //keep looping until the button is released
+          delay(0);                //avoid rebooting of the MCU
+        }
+        EndTime0 = millis();
+        if((EndTime0 - StartTime0) >= 1950 )
+          return 2;         //2 means long press (about 2 sec.)
+        else
+          return 1;         //1 means short press
+    }
+    else return 0;          //0 means button is not pressed
   }
-  else return 0;
+  else return 0;            //0 means button is not pressed
 }
 
-void blinky(int a) {          //function to make the led blink
-  for ( ; a>0;a--) {
-    digitalWrite(LED,LOW);      //LED ON (active low LED)
+void blinky(int led_pin, int number) {          //function to make an led blink
+  for ( ; number > 0; number--) {
+    digitalWrite(led_pin,LOW);      //LED ON (all are active low LEDs)
     delay(300);
-    digitalWrite(LED,HIGH);     //LED OFF
+    digitalWrite(led_pin,HIGH);     //LED OFF
     delay(200);
   }
   return;
@@ -51,50 +97,37 @@ void blinky(int a) {          //function to make the led blink
 void attachLoad(int x) {      //function to attach the load on long press
   switch (x) {
     case 1:  {  //turn on ONE load at a time
-                digitalWrite(LOAD_560,LOW); 
-                digitalWrite(LOAD_232,HIGH); 
-                digitalWrite(LOAD_116,HIGH); 
-                digitalWrite(LOAD_047,HIGH); 
+                digitalWrite(LOAD1,LOW); 
+                digitalWrite(LOAD2,HIGH); 
+                digitalWrite(LOAD3,HIGH); 
                 digitalWrite(DUT,HIGH); 
                 break ; 
               }
     case 2:  {  //turn on ONE load at a time
-                digitalWrite(LOAD_560,HIGH); 
-                digitalWrite(LOAD_232,LOW); 
-                digitalWrite(LOAD_116,HIGH); 
-                digitalWrite(LOAD_047,HIGH); 
+                digitalWrite(LOAD1,HIGH); 
+                digitalWrite(LOAD2,LOW); 
+                digitalWrite(LOAD3,HIGH); 
                 digitalWrite(DUT,HIGH); 
                 break ; 
               }
     case 3:  {  //turn on ONE load at a time
-                digitalWrite(LOAD_560,HIGH); 
-                digitalWrite(LOAD_232,HIGH); 
-                digitalWrite(LOAD_116,LOW); 
-                digitalWrite(LOAD_047,HIGH); 
+                digitalWrite(LOAD1,HIGH); 
+                digitalWrite(LOAD2,HIGH); 
+                digitalWrite(LOAD3,LOW); 
                 digitalWrite(DUT,HIGH); 
                 break ; 
               }
     case 4:  {  //turn on ONE load at a time
-                digitalWrite(LOAD_560,HIGH); 
-                digitalWrite(LOAD_232,HIGH); 
-                digitalWrite(LOAD_116,HIGH); 
-                digitalWrite(LOAD_047,LOW); 
-                digitalWrite(DUT,HIGH); 
-                break ; 
-              }
-    case 5:  {  //turn on ONE load at a time
-                digitalWrite(LOAD_560,HIGH); 
-                digitalWrite(LOAD_232,HIGH); 
-                digitalWrite(LOAD_116,HIGH); 
-                digitalWrite(LOAD_047,HIGH); 
+                digitalWrite(LOAD1,HIGH); 
+                digitalWrite(LOAD2,HIGH); 
+                digitalWrite(LOAD3,HIGH); 
                 digitalWrite(DUT,LOW); 
                 break ; 
               }
     default: {  //turn OFF ALL loads
-                digitalWrite(LOAD_560,HIGH); 
-                digitalWrite(LOAD_232,HIGH); 
-                digitalWrite(LOAD_116,HIGH); 
-                digitalWrite(LOAD_047,HIGH); 
+                digitalWrite(LOAD1,HIGH); 
+                digitalWrite(LOAD2,HIGH); 
+                digitalWrite(LOAD3,HIGH); 
                 digitalWrite(DUT,HIGH); 
                 break ; 
               }
@@ -102,26 +135,33 @@ void attachLoad(int x) {      //function to attach the load on long press
   return;
 }
 
-void led(boolean y) {    //function to turn on or off LED
-  digitalWrite(LED,!y);
+void led(int led_pin, boolean y) {    //function to turn on or off LED
+  digitalWrite(led_pin,!y);           //active low LEDs
   return;
 }
 
 void loadSelect() {    //gets input from the user and attaches the load
   while(1) {
-  while((! buttonPressed()) && (selected <= 0)) {
-    led(0);         //turn off led
-    delay(10);      //wait for some time (stops resetting the MCU)
+  while((!buttonPressed()) && (selected <= 0)) {
+    led(LED0,OFF);  //turn off led
+    //delay(10);      //wait for some time (stops resetting the MCU)
   }
-  if (buttonPressed()) {
+  if ( buttonPressed() == 1 ) {    //if short press detected
     selected++; 
-    if(selected==6) selected=1;     //if overflows, circularly change it!
-    blinky(selected);               //flash the led the number of times 'selected'
-    if(!digitalRead(FLASH_BUTTON)) {    //if still button is held pressed i.e. long press
-       attachLoad(selected);            //attach the load
-       break;                   //break from the while(1)
+    if(selected == 5) 
+      selected=1;     //roll over condition
+    switch (selected) {   //turn ON specific LED(s) 
+      case 1: { led(LED1,ON); led(LED2,OFF); led(LED3,OFF); led(LED4,OFF); } break;
+      case 2: { led(LED1,OFF); led(LED2,ON); led(LED3,OFF); led(LED4,OFF); } break;
+      case 3: { led(LED1,OFF); led(LED2,OFF); led(LED3,ON); led(LED4,OFF); } break;
+      case 4: { led(LED1,OFF); led(LED2,OFF); led(LED3,OFF); led(LED4,ON); } break;
+      default:  { led(LED1,OFF); led(LED2,OFF); led(LED3,OFF); led(LED4,OFF); } break;
     }
   }
-  delay(10);
+  if( buttonPressed() == 2 ) { //if long press detected (no need to check the validity of 'selected', that's taken care by the switch statement)
+       attachLoad(selected);            //attach the load
+       break;                  //break from the while(1)
+  }
+  delay(0);   // avoid rebooting of the MCU
  }
 }

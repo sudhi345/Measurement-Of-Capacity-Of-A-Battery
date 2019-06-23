@@ -13,64 +13,74 @@
 #include "config.h"
 #include "DischargeBattery.h"
 
-float Vbat = 0;
+float Vbat = 0, saved = 0;
 float last = -1;
 boolean ONCE_DISCHARGED = 0;      
+long int CurTime, StartTime, EndTime;
 
 AdafruitIO_Feed *analog = io.feed("analog"); //Set up the feed. Replace "analog" in this line with the name of the feed that you created
 
 void setup() {
   //set pinMode
-  pinMode(LOAD_560,OUTPUT);  //pin D0, load resistance of 560ohm
-  pinMode(LOAD_232,OUTPUT);  //pin D1, load resistance of 232ohm
-  pinMode(LOAD_116,OUTPUT);  //pin D2, load resistance of 116ohm
-  pinMode(LOAD_047,OUTPUT);  //pin D7, load resistance of 047ohm
-  pinMode(DUT,OUTPUT);       //pin D8, load is the Device Under Test (DUT)
+  pinMode(LOAD1,OUTPUT);  //load resistance of 564ohm
+  pinMode(LOAD2,OUTPUT);  //load resistance of 232ohm
+  pinMode(LOAD3,OUTPUT);  //load resistance of 116ohm
+  pinMode(DUT,OUTPUT);       //load is the Device Under Test (DUT)
   pinMode(FLASH_BUTTON,INPUT_PULLUP);  //pin D3, to which the 'Flash' push button is connected.
-  pinMode(EN_VOLTAGE_DIVIDER,OUTPUT);       //pin D6, gate of the mosfet
-  pinMode(LED,OUTPUT);       //set the inbuilt LED pin as Output
+  pinMode(SW,INPUT);         //push button (active high input)
+  pinMode(EN_VOLTAGE_DIVIDER,OUTPUT);  //pin D6, gate of the mosfet which enables the voltage divider
+  pinMode(LED0,OUTPUT);       //set the inbuilt LED0 pin as Output
+  pinMode(LED1,OUTPUT);       //set the LED1 pin as Output
+  pinMode(LED2,OUTPUT);       //set the LED2 pin as Output
+  pinMode(LED3,OUTPUT);       //set the LED3 pin as Output
+  pinMode(LED4,OUTPUT);       //set the LED4 pin as Output
   
-  turnOffAll();   //make sure all loads are off initially
-  led(1);        //turn on LED so that we get to know when it is ready to take inputs
+  turnOffAllLoad();   //make sure all loads are off initially
+  led(LED0, ON);        //turn on LED so that we get to know when it is ready to take inputs
   io.connect();   // connect to io.adafruit.com
   
   // wait for a connection
   while(io.status() < AIO_CONNECTED) {
     delay(500);
   }
-  
-  // we are connected
-  loadSelect();
+  // we are connected. Turn off all LEDs
+  led(LED0, OFF); led(LED1,OFF); led(LED2,OFF); led(LED3,OFF); led(LED4,OFF);
+  loadSelect();   //let the user select load / DUT
 }
 
 void loop() {
-
+  StartTime = millis();
   // io.run(); is required for all sketches. It should always be present at the top of your loop function. It keeps the client connected to
   // io.adafruit.com, and processes any incoming data.
   io.run();
-  if(! ONCE_DISCHARGED)  {
-  Vbat = readVoltage();
-  if(Vbat == last)
-    return;     // return if the value hasn't changed
-  if(! (Vbat < VLowerCutOff)) {
+  if( !ONCE_DISCHARGED )  
+    Vbat = readVoltage();
+  if( !(Vbat < VLowerCutOff) ) {
     if(io.status() < AIO_CONNECTED) {
-      //enqueue the values
+      enqueue(Vbat);    //enqueue the values
     }
     else {
-      analog->save(Vbat); // save the current state to the analog feed
-    }
-  last = Vbat; // store last read Vbat
-  delay(2000);  // wait two seconds
+      saved = dequeue();  //read value from the queue
+      analog->save(saved); // save the value to the feed
+    } 
   }
-}
-
   if(Vbat < VLowerCutOff)  {   //if the battery Vbat falls below the lower cut off
       ONCE_DISCHARGED = 1;         //clear the ONCE_DISCHARGED so that it does not oscillate when terminal Vbat rises slightly.
-      turnOffAll();    //turn OFF ALL loads when batteries got fully discharged.
+      turnOffAllLoad();    //turn OFF ALL loads when batteries got fully discharged.
    
       while(1){
-          blinky(3);
-          delay(1000);  //do nothing    
-       }
+        if( !(io.status() < AIO_CONNECTED) && (rear != 0) && (front != 0) ) {   //connected but queue is not empty
+          saved = dequeue();          //read value from the queue
+          analog->save(Vbat);         // save the value to the feed
+          led(LED0, ON);              //indicate using LED0
+        }
+        else {
+          led(LED0, OFF);
+          delay(0);                //do nothing  
+        }
+     }
+  }
+  while (( StartTime - millis() ) < 2000 ) {  // wait two seconds
+      delay(0);
   }
 }
