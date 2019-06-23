@@ -1,7 +1,7 @@
 ## Which battery and charger?
 
 *Tuscan Gold* (model: TG-003) NiCd, NiMH battery charger to charge the *GP Battery* (17AAAH, 1.2V, C = 170mAh, NiMH,*1/3rd AAA*).
-![1/3rd AAA battery](https://github.com/sudhi345/Measurement-Of-Capacity-Of-A-Battery/blob/master/Charger_hacked/battery_GP.jpg)
+<img align='center' width=100px hight=100px>![1/3rd AAA battery](https://github.com/sudhi345/Measurement-Of-Capacity-Of-A-Battery/blob/master/Charger_hacked/battery_GP.jpg) </img>
 
 ## Why the charger needs modifications?
 
@@ -10,7 +10,7 @@ mentioned tiny batteries. For the NiMH battery it is recommemnded to charge at 0
 the batteries will result in a long charge duration.  Another problem with these tiny batteries is that they can not be installed in the given 
 slot as that is for full sized AAA batteries.
 
-## How the problems are solved?
+## What are the modifications?
 
 1. The over current problem was solved by adding a 147ohm resistor is series with the charger terminals and achieved a current flow of around 
 12mA (~0.07C). Thses batteries (NiMH/NiCd) don't have floating terminal potential like Li-Ion batteries. So the change in voltage due to the 
