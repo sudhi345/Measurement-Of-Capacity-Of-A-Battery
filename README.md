@@ -40,8 +40,14 @@ hence the readings may not be accurate.
 The n-MOS switch is required as the voltage divider acts as another resistive load parallel to the selected load.
 An OLED display is used to display the selected load, time etc.
 <br>
+The hardware limits the maximum battery voltage to 3V and the choosen MOS switches and loads limit the maximum battery capacity 
+/ time taken for the measurement.  
+<br>
 The circuit connections and the designed PCB can be found in the directory PCB_KICAD.
-The details about the charger and the battery can be found in 'modified_charger' directory. <br>
+The details about the charger and the battery can be found in 'Charger_hacked' directory. <br>
 Arduino IDE is used to program the microcontroller. The required header files and libraries are in the 'upload_voltage' directory.
 
+### Conclusion:
 
+This project is helpful even if the DUT draws few micro-amperes of current during sleep and few milli-amperes during high activity.
+Hence the calculation of battery life is simplified with this.
