@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:CapacityOfBattery-cache
 EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
@@ -654,7 +655,7 @@ U 1 1 5D0F9A0A
 P 2950 5550
 F 0 "J3" H 2844 5835 50  0000 C CNN
 F 1 "Conn_01x04" H 2844 5744 50  0000 C CNN
-F 2 "testlibfp:128x32OLED_Display" H 2950 5550 50  0001 C CNN
+F 2 "lib_fp:128x32_OLED_Display" H 2950 5550 50  0001 C CNN
 F 3 "~" H 2950 5550 50  0001 C CNN
 	1    2950 5550
 	-1   0    0    -1  

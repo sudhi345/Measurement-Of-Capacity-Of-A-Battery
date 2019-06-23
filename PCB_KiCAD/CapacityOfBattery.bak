@@ -284,11 +284,11 @@ F 3 "" H 5100 4250 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6750 5600 6500 5600
+	6750 4400 6500 4400
 Wire Wire Line
-	6750 5500 6500 5500
+	6750 4500 6500 4500
 Wire Wire Line
-	6750 5400 6500 5400
+	6750 4600 6500 4600
 Wire Wire Line
 	6750 5300 6500 5300
 Wire Wire Line
@@ -301,11 +301,11 @@ Text Label 4650 5400 0    50   ~ 0
 Vcc
 Text Label 6750 5300 2    50   ~ 0
 Ctrl4
-Text Label 6750 5400 2    50   ~ 0
+Text Label 6750 4600 2    50   ~ 0
 Ctrl3
-Text Label 6750 5500 2    50   ~ 0
+Text Label 6750 4500 2    50   ~ 0
 Ctrl2
-Text Label 6750 5600 2    50   ~ 0
+Text Label 6750 4400 2    50   ~ 0
 Ctrl1
 NoConn ~ 4900 5200
 NoConn ~ 4900 5100
