@@ -1,7 +1,7 @@
 ## Which battery and charger?
 
 *Tuscan Gold* (model: TG-003) NiCd, NiMH battery charger to charge the *GP Battery* (17AAAH, 1.2V, C = 170mAh, NiMH,*1/3rd AAA*).
-<img align='center' width=100px hight=100px>![1/3rd AAA battery](https://github.com/sudhi345/Measurement-Of-Capacity-Of-A-Battery/blob/master/Charger_hacked/battery_GP.jpg) </img>
+![1/3rd AAA battery](https://github.com/sudhi345/Measurement-Of-Capacity-Of-A-Battery/blob/master/Charger_hacked/battery_GP.jpg | width=200x)
 
 ## Why the charger needs modifications?
 
