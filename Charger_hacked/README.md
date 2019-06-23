@@ -1,6 +1,7 @@
 ## Which battery and charger?
 
-*Tuscan Gold* (model: TG-003) NiCd,NiMH battery charger to charge the *GP Battery* (17AAAH, 1.2V, C = 170mAh, NiMH,*1/3rd AAA*).
+*Tuscan Gold* (model: TG-003) NiCd, NiMH battery charger to charge the *GP Battery* (17AAAH, 1.2V, C = 170mAh, NiMH,*1/3rd AAA*).
+![1/3rd AAA battery](https://github.com/sudhi345/Measurement-Of-Capacity-Of-A-Battery/blob/master/Charger_hacked/battery_GP.jpg)
 
 ## Why the charger needs modifications?
 
@@ -16,5 +17,6 @@ slot as that is for full sized AAA batteries.
 added resistor across the terminals doesn't matter actually.
 2. A pair of Molex connector was added to the charger with the wires connecting the terminals (One connector for 2S configuration. Resistor and
 connections are invisible).
+![Hacked charger](https://github.com/sudhi345/Measurement-Of-Capacity-Of-A-Battery/blob/master/Charger_hacked/charger_tuscan.jpg)
 
 
