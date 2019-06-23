@@ -278,17 +278,17 @@ U 1 1 5D05B443
 P 5700 5100
 F 0 "U1" H 5700 6187 60  0000 C CNN
 F 1 "NodeMCU1.0(ESP-12E)" H 5700 6081 60  0000 C CNN
-F 2 "lib_fp:NodeMCU-LoLinV3" H 5700 6081 60  0001 C CNN
+F 2 "lib_fp:NodeMCU-LoLinV3_without_border" H 5700 6081 60  0001 C CNN
 F 3 "" H 5100 4250 60  0000 C CNN
 	1    5700 5100
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6750 5600 6500 5600
+	6750 4400 6500 4400
 Wire Wire Line
-	6750 5500 6500 5500
+	6750 4500 6500 4500
 Wire Wire Line
-	6750 5400 6500 5400
+	6750 4600 6500 4600
 Wire Wire Line
 	6750 5300 6500 5300
 Wire Wire Line
@@ -301,18 +301,17 @@ Text Label 4650 5400 0    50   ~ 0
 Vcc
 Text Label 6750 5300 2    50   ~ 0
 Ctrl4
-Text Label 6750 5400 2    50   ~ 0
+Text Label 6750 4600 2    50   ~ 0
 Ctrl3
-Text Label 6750 5500 2    50   ~ 0
+Text Label 6750 4500 2    50   ~ 0
 Ctrl2
-Text Label 6750 5600 2    50   ~ 0
+Text Label 6750 4400 2    50   ~ 0
 Ctrl1
 NoConn ~ 4900 5200
 NoConn ~ 4900 5100
 NoConn ~ 4900 5000
 NoConn ~ 4900 4900
 NoConn ~ 4900 4600
-NoConn ~ 6500 4800
 NoConn ~ 4900 5800
 NoConn ~ 4900 5500
 NoConn ~ 4900 5600
@@ -500,14 +499,6 @@ GND
 Wire Wire Line
 	6750 4700 6500 4700
 Wire Wire Line
-	6750 4500 6500 4500
-Wire Wire Line
-	6750 4400 6500 4400
-Wire Wire Line
-	6750 5100 6500 5100
-Wire Wire Line
-	6750 4600 6500 4600
-Wire Wire Line
 	4650 5700 4900 5700
 Wire Wire Line
 	4650 5300 4900 5300
@@ -515,14 +506,6 @@ Text Label 4650 5300 0    50   ~ 0
 GND
 Text Label 4650 5700 0    50   ~ 0
 GND
-Text Label 6750 4400 2    50   ~ 0
-LED1
-Text Label 6750 4500 2    50   ~ 0
-LED2
-Text Label 6750 4600 2    50   ~ 0
-LED3
-Text Label 6750 5100 2    50   ~ 0
-LED4
 Text Label 6750 4700 2    50   ~ 0
 SW
 Wire Wire Line
@@ -531,32 +514,10 @@ Connection ~ 8150 5600
 Wire Wire Line
 	7900 5600 8150 5600
 NoConn ~ 4900 4800
-$Comp
-L Switch:SW_Push SW1
-U 1 1 5D1A9804
-P 8800 2450
-F 0 "SW1" V 8754 2598 50  0000 L CNN
-F 1 "SW_Push" V 8845 2598 50  0000 L CNN
-F 2 "lib_fp:SW_PUSH_6mm" H 8800 2650 50  0001 C CNN
-F 3 "" H 8800 2650 50  0001 C CNN
-	1    8800 2450
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:R R10
-U 1 1 5D1A9944
-P 8800 2950
-F 0 "R10" V 8900 2900 50  0000 L CNN
-F 1 "1k" V 8800 2900 50  0000 L CNN
-F 2 "lib_fp:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 8730 2950 50  0001 C CNN
-F 3 "~" H 8800 2950 50  0001 C CNN
-	1    8800 2950
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	8800 2000 8800 2250
 Wire Wire Line
-	8800 2650 8800 2700
+	8800 2550 8800 2600
 $Comp
 L power:GND #PWR06
 U 1 1 5D1B375E
@@ -571,16 +532,16 @@ $EndComp
 Wire Wire Line
 	8800 3100 8800 3200
 Wire Wire Line
-	8450 2700 8800 2700
-Connection ~ 8800 2700
+	8450 2600 8800 2600
+Connection ~ 8800 2600
 Wire Wire Line
-	8800 2700 8800 2800
+	8800 2600 8800 2700
 Text Label 8800 2000 3    50   ~ 0
 Vcc
-Text Label 8450 2700 0    50   ~ 0
+Text Label 8450 2600 0    50   ~ 0
 SW
-Text Notes 9050 2850 0    50   ~ 0
-A switch is used \nto select the load\n(Active HIGH)
+Text Notes 9000 2700 0    50   ~ 0
+A switch is used \nto select the load.
 $Comp
 L Device:R RL2
 U 1 1 5D0C89B4
@@ -688,15 +649,15 @@ F 3 "~" H 2800 4750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Conn_01x04_Male J3
+L Connector:Conn_01x04_Female J3
 U 1 1 5D0F9A0A
 P 2950 5550
-F 0 "J3" H 3056 5828 50  0000 C CNN
-F 1 "Conn_01x04_Male" H 3056 5737 50  0000 C CNN
-F 2 "" H 2950 5550 50  0001 C CNN
+F 0 "J3" H 2844 5835 50  0000 C CNN
+F 1 "Conn_01x04" H 2844 5744 50  0000 C CNN
+F 2 "testlibfp:128x32OLED_Display" H 2950 5550 50  0001 C CNN
 F 3 "~" H 2950 5550 50  0001 C CNN
 	1    2950 5550
-	1    0    0    -1  
+	-1   0    0    -1  
 $EndComp
 Wire Wire Line
 	3150 5450 3450 5450
@@ -717,4 +678,34 @@ SDA
 NoConn ~ 4900 4700
 Text Notes 3550 6100 2    50   ~ 0
 J3 is used to interface \nOLED display using I2C \ncommunication.
+$Comp
+L Device:R R2
+U 1 1 5D11DF58
+P 8800 2400
+F 0 "R2" V 8900 2350 50  0000 L CNN
+F 1 "1k" V 8800 2350 50  0000 L CNN
+F 2 "lib_fp:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 8730 2400 50  0001 C CNN
+F 3 "~" H 8800 2400 50  0001 C CNN
+	1    8800 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push SW1
+U 1 1 5D1217D0
+P 8800 2900
+F 0 "SW1" V 8754 3048 50  0000 L CNN
+F 1 "SW_Push" V 8845 3048 50  0000 L CNN
+F 2 "lib_fp:SW_PUSH_6mm" H 8800 3100 50  0001 C CNN
+F 3 "" H 8800 3100 50  0001 C CNN
+	1    8800 2900
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	6750 4800 6500 4800
+Text Label 6750 4800 2    50   ~ 0
+SDA
+Wire Wire Line
+	6500 5100 6750 5100
+Text Label 6750 5100 2    50   ~ 0
+SCL
 $EndSCHEMATC
