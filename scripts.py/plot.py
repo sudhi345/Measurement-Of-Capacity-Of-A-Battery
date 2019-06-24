@@ -36,21 +36,27 @@ l=len(Value)
 x=range(0,2*l-1,2)
 mAh=trapz(Value)
 mAh /= 100
-zz = str(mAh)+"mAh\nNo. of data points:"+str(l)
+zz = "Capacity: " + str(mAh)[0 : 7] +"mAh\nNo. of data points:"+str(l)
 bbox_props = dict(boxstyle="square,pad=0.3", fc="cyan", ec="b", lw=2)
-ax.text(-800, 1, zz, ha="right", va="bottom",
-            size=15,
+ax.text(-1500, 1, zz, ha="right", va="bottom",
+            size=10,
             bbox=bbox_props)
 ax.text(0, -2.5, start_time, ha="center", va="top",
-            size=15,
+            size=10,
             bbox=bbox_props)
 ax.text(2*l-1, -2.5, end_time, ha="center", va="top",
-            size=15,
+            size=10,
             bbox=bbox_props)
+ax.text(-1500, 15, "-- Current (mA)", ha="right", va="center",
+	size=15,
+	bbox= dict (fc="red"))
+ax.text(-1500, 13, "-- Voltage (V)", ha="right", va="center",
+	size=15,
+	bbox= dict (fc="blue"))
 plt.plot(x,Value,'b-')
 plt.plot(x,Value/0.1,'r--')
 plt.title('Discharge Curve')
-plt.ylabel('Voltage')
+#plt.ylabel('Voltage')
 plt.xlabel('Time')
 plt.show()
 
