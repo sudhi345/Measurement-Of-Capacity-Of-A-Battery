@@ -14,8 +14,8 @@ Follow the link to [learn more](https://batteryuniversity.com/learn/article/batt
  
 In order to get the actual capacity (close-enough-value), measuring the same is the method. 
 There are different methods using which one can measure the capacity, for example, Coulomb counting, Voltage monitoring etc.
-*([Learn more here](https://www.quora.com/How-can-we-measure-a-batterys-real-capacity-in-Mah-or-ah-accurately))
-(Or [here](https://batteryuniversity.com/learn/article/how_to_measure_capacity)).*
+*([Learn more here](https://www.quora.com/How-can-we-measure-a-batterys-real-capacity-in-Mah-or-ah-accurately) or 
+[here](https://batteryuniversity.com/learn/article/how_to_measure_capacity)).*
 
 Here we use the second method; monitoring the terminal voltage when a known load (resistive) is connected. 
 
