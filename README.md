@@ -10,11 +10,11 @@ Capacity of a battery is measured in Ah (ampere-hours, for large batteries) or m
 This is usually mentioned on the battery or in the datasheets provided by the manufacturer.
 But the capacity changes depending on the age of the battery, operating conditions, slightly different chemical composition etc. 
 So it affects final result if use the capacity value provided by the manufacturer. 
-Follow the link to [learn more](https://batteryuniversity.com/learn/article/battery_definitions).
+*[learn more.](https://batteryuniversity.com/learn/article/battery_definitions)*
  
 In order to get the actual capacity (close-enough-value), measuring the same is the method. 
 There are different methods using which one can measure the capacity, for example, Coulomb counting, Voltage monitoring etc.
-*([Learn more here](https://www.quora.com/How-can-we-measure-a-batterys-real-capacity-in-Mah-or-ah-accurately) or 
+*Learn more ([here](https://www.quora.com/How-can-we-measure-a-batterys-real-capacity-in-Mah-or-ah-accurately) or 
 [here](https://batteryuniversity.com/learn/article/how_to_measure_capacity)).*
 
 Here we use the second method; monitoring the terminal voltage when a known load (resistive) is connected. 
@@ -26,7 +26,7 @@ The microcontroller logs the terminal voltage read from its pin to a remote serv
 The loads are automatically disconnected using logic level p-MOS switches. 
 A python script displays the discharge curve and the area under the 
 curve (area under the V*I v/s t curve is power rating and area under the I v/s t curve is the mAh / Ah of the batteries).<br>
-Once again the batteries are charged and but this Device Under Test (DUT) is selected instead of a load (using the same microcontroller). 
+Once again the batteries are charged but this time Device Under Test (DUT) is selected instead of a load (using the same microcontroller). 
 The time taken for the DUT to discharge the batteries is found. This can then be used to calculate the life of any battery using ratios 
 ( Eg.: If for X (mAh) it is Y (no. of days) then for Z (mAh)? = YZ/X ).
 
