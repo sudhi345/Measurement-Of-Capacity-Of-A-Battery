@@ -14,7 +14,7 @@ So it affects final result if use the capacity value provided by the manufacture
  
 In order to get the actual capacity (close-enough-value), measuring the same is the method. 
 There are different methods using which one can measure the capacity, for example, Coulomb counting, Voltage monitoring etc.
-*Learn more ([here](https://www.quora.com/How-can-we-measure-a-batterys-real-capacity-in-Mah-or-ah-accurately) or 
+*(Learn more [here](https://www.quora.com/How-can-we-measure-a-batterys-real-capacity-in-Mah-or-ah-accurately) or 
 [here](https://batteryuniversity.com/learn/article/how_to_measure_capacity)).*
 
 Here we use the second method; monitoring the terminal voltage when a known load (resistive) is connected. 
@@ -39,10 +39,8 @@ The voltage divider is not the one which is present on the LOLin board. Those ar
 hence the readings may not be accurate.
 The n-MOS switch is required as the voltage divider acts as another resistive load parallel to the selected load.
 An OLED display is used to display the selected load, time etc.
-<br>
 The hardware limits the maximum battery voltage to 3V and the choosen MOS switches and loads limit the maximum battery capacity 
 / time taken for the measurement.  
-<br>
 The circuit connections and the designed PCB can be found in the directory PCB_KICAD.
 The details about the charger and the battery can be found in 'Charger_hacked' directory. <br>
 Arduino IDE is used to program the microcontroller. The required header files and libraries are in the 'upload_voltage' directory.
