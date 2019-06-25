@@ -1,15 +1,13 @@
-#define BUFF_SIZE 10000   //max size of the buffer
-#define LOAD1 1        //load resistance of 564ohm
-#define LOAD2 3        //load resistance of 232ohm
-#define LOAD3 15       //load resistance of 116ohm
-#define DUT      13       //load is the Device Under Test (DUT)
+#define BUFF_SIZE 1000   //max size of the buffer
+#define LOAD1 16        //load resistance of 564ohm
+#define LOAD2 5        //load resistance of 232ohm
+#define LOAD3 4       //load resistance of 116ohm
+#define DUT   13       //load is the Device Under Test (DUT)
 #define FLASH_BUTTON 0    //pin to which the 'Flash' push button is connected.
 #define LED0 2            //define the inbuilt led pin
-#define LED1 16           //define the led for load 1
-#define LED2 5            //define the led for load 2
-#define LED3 4            //define the led for load 3
-#define LED4 14           //define the led for load 4
-#define SW   9           //define the pin connected to the push button
+#define SW   0           //define the pin connected to the push button
+#define scl  14
+#define sda  2
 #define EN_VOLTAGE_DIVIDER 12 //pin D6 which drives the gate of a mosfet which enables the voltage divider for analog input.
 #define Vin A0            //input: battery voltage 
 const boolean ON = 1;
@@ -20,6 +18,7 @@ const int Vin_min = 0;           //minimum voltage that can be given as analog i
 int selected = 0;                //to store the previously selected load
 int front;                       //front index of queue (next empty location)
 int rear;                        //rear index of queue  (first filled location)
+int typeOfPress = 0;              //store whether long press or short press
 float Queue[BUFF_SIZE];           //buffer stucture for storing the values if connection is lost
 
 void queueInit() {     //initialize pointers (queue is empty)
@@ -36,13 +35,13 @@ void enqueue(float V) {   //write a value to the buffer
 
 float dequeue() {     //read value from the buffer
   float val;
-  if( rear == front ) {  //queue has only one value
+  if( (rear == ( front - 1 )) || (rear == (BUFF_SIZE - 1)) ) {  //queue has only one value
     val = Queue[rear];   //store value in a temporay variable
     queueInit();         //re-initialize 
   }
   else {
     val = Queue[rear];
-    rear++; //increment rear to point to next filled location
+    rear++;         //increment rear to point to next filled location
     if ( rear == BUFF_SIZE )
       rear = 0;   //if overflows set it back to 0 (circular behavior)
   }
@@ -67,10 +66,10 @@ float readVoltage() {  //reads voltage at Vin by enabling the voltage divider
 int buttonPressed() {     //function to detect if the button is pressed / not pressed / long pressed 
   long int EndTime0, StartTime0;
   StartTime0 = millis();
-  if(digitalRead(SW)) {       //if button is pressed it gives 'HIGH' on the pin
+  if(!digitalRead(SW)) {       //if button is pressed it gives 'LOW' on the pin
     delay(10);                //debounce
-    if(digitalRead(SW)) {     //verify again
-        while(digitalRead(SW)) {    //keep looping until the button is released
+    if(!digitalRead(SW)) {     //verify again
+        while(!digitalRead(SW)) {    //keep looping until the button is released
           delay(0);                //avoid rebooting of the MCU
         }
         EndTime0 = millis();
@@ -142,26 +141,29 @@ void led(int led_pin, boolean y) {    //function to turn on or off LED
 
 void loadSelect() {    //gets input from the user and attaches the load
   while(1) {
-  while((!buttonPressed()) && (selected <= 0)) {
+  while((digitalRead(SW)) && (selected <= 0)) {
     led(LED0,OFF);  //turn off led
-    //delay(10);      //wait for some time (stops resetting the MCU)
+    delay(0);      //stops resetting the MCU
   }
-  if ( buttonPressed() == 1 ) {    //if short press detected
+  typeOfPress = buttonPressed();
+  if ( typeOfPress == 1 ) {    //if short press detected
     selected++; 
     if(selected == 5) 
       selected=1;     //roll over condition
     switch (selected) {   //turn ON specific LED(s) 
-      case 1: { led(LED1,ON); led(LED2,OFF); led(LED3,OFF); led(LED4,OFF); } break;
-      case 2: { led(LED1,OFF); led(LED2,ON); led(LED3,OFF); led(LED4,OFF); } break;
-      case 3: { led(LED1,OFF); led(LED2,OFF); led(LED3,ON); led(LED4,OFF); } break;
-      case 4: { led(LED1,OFF); led(LED2,OFF); led(LED3,OFF); led(LED4,ON); } break;
-      default:  { led(LED1,OFF); led(LED2,OFF); led(LED3,OFF); led(LED4,OFF); } break;
+      case 1: { led(scl,OFF); led(sda,OFF); } break;
+      case 2: { led(scl,OFF); led(sda,ON); } break;
+      case 3: { led(scl,ON); led(sda,OFF); } break;
+      case 4: { led(scl,ON); led(sda,ON); } break;
+      default:  { led(scl,OFF); led(sda,OFF); } break;
     }
   }
-  if( buttonPressed() == 2 ) { //if long press detected (no need to check the validity of 'selected', that's taken care by the switch statement)
+  if( typeOfPress == 2 ) { //if long press detected (no need to check the validity of 'selected', that's taken care by the switch statement)
+       led(scl,OFF); led(sda,OFF);
        attachLoad(selected);            //attach the load
        break;                  //break from the while(1)
   }
   delay(0);   // avoid rebooting of the MCU
  }
+ return;
 }

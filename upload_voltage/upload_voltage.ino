@@ -27,13 +27,12 @@ void setup() {
   pinMode(LOAD3,OUTPUT);  //load resistance of 116ohm
   pinMode(DUT,OUTPUT);       //load is the Device Under Test (DUT)
   pinMode(FLASH_BUTTON,INPUT_PULLUP);  //pin D3, to which the 'Flash' push button is connected.
-  pinMode(SW,INPUT);         //push button (active high input)
+  pinMode(SW,INPUT_PULLUP);         //push button (active high input)
   pinMode(EN_VOLTAGE_DIVIDER,OUTPUT);  //pin D6, gate of the mosfet which enables the voltage divider
   pinMode(LED0,OUTPUT);       //set the inbuilt LED0 pin as Output
-  pinMode(LED1,OUTPUT);       //set the LED1 pin as Output
-  pinMode(LED2,OUTPUT);       //set the LED2 pin as Output
-  pinMode(LED3,OUTPUT);       //set the LED3 pin as Output
-  pinMode(LED4,OUTPUT);       //set the LED4 pin as Output
+  pinMode(scl,OUTPUT);
+  pinMode(sda,OUTPUT);
+  pinMode(Vin,INPUT);
   
   turnOffAllLoad();   //make sure all loads are off initially
   led(LED0, ON);        //turn on LED so that we get to know when it is ready to take inputs
@@ -43,9 +42,10 @@ void setup() {
   while(io.status() < AIO_CONNECTED) {
     delay(500);
   }
-  // we are connected. Turn off all LEDs
-  led(LED0, OFF); led(LED1,OFF); led(LED2,OFF); led(LED3,OFF); led(LED4,OFF);
+  blinky(LED0,5);   // we are connected. Turn off all LEDs
+  led(LED0, OFF); led(scl,OFF); led(sda,OFF);
   loadSelect();   //let the user select load / DUT
+  queueInit();
 }
 
 void loop() {
@@ -55,15 +55,12 @@ void loop() {
   io.run();
   if( !ONCE_DISCHARGED )  
     Vbat = readVoltage();
-  if( !(Vbat < VLowerCutOff) ) {
-    if(io.status() < AIO_CONNECTED) {
-      enqueue(Vbat);    //enqueue the values
-    }
-    else {
-      saved = dequeue();  //read value from the queue
-      analog->save(saved); // save the value to the feed
-    } 
-  }
+  if( !(Vbat < VLowerCutOff) )
+    enqueue(Vbat);    //enqueue the values
+  if(!(io.status() < AIO_CONNECTED)) {
+    saved = dequeue();  //read value from the queue
+    analog->save(saved); // save the value to the feed
+  } 
   if(Vbat < VLowerCutOff)  {   //if the battery Vbat falls below the lower cut off
       ONCE_DISCHARGED = 1;         //clear the ONCE_DISCHARGED so that it does not oscillate when terminal Vbat rises slightly.
       turnOffAllLoad();    //turn OFF ALL loads when batteries got fully discharged.
@@ -80,7 +77,8 @@ void loop() {
         }
      }
   }
-  while (( StartTime - millis() ) < 2000 ) {  // wait two seconds
-      delay(0);
-  }
+
+  CurTime = millis();
+  //delay(2000 - (StartTime - CurTime));
+  delay(1700);
 }
