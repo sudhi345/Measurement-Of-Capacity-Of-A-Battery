@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:CapacityOfBattery-cache
 EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
@@ -62,7 +61,7 @@ J2 is used to\nconnect the\nDevice Under Test.
 Text Notes 8100 1650 0    50   ~ 0
 J1 is used to\nconnect the \nBattery [charged].
 $Comp
-L dk_Transistors-FETs-MOSFETs-Single:IRLML6401TRPBF Q1
+L mAhTime:dk_Transistors-FETs-MOSFETs-Single_IRLML6401TRPBF Q1
 U 1 1 5D0475D2
 P 2900 2300
 F 0 "Q1" V 3050 2300 60  0000 L CNN
@@ -82,7 +81,7 @@ F 12 "Active" H 3100 3500 60  0001 L CNN "Status"
 	1    0    0    1   
 $EndComp
 $Comp
-L dk_Transistors-FETs-MOSFETs-Single:IRLML6401TRPBF Q2
+L mAhTime:dk_Transistors-FETs-MOSFETs-Single_IRLML6401TRPBF Q2
 U 1 1 5D0498F3
 P 4250 2350
 F 0 "Q2" V 4400 2350 60  0000 L CNN
@@ -102,7 +101,7 @@ F 12 "Active" H 4450 3550 60  0001 L CNN "Status"
 	1    0    0    1   
 $EndComp
 $Comp
-L dk_Transistors-FETs-MOSFETs-Single:IRLML6401TRPBF Q3
+L mAhTime:dk_Transistors-FETs-MOSFETs-Single_IRLML6401TRPBF Q3
 U 1 1 5D049929
 P 5600 2350
 F 0 "Q3" V 5750 2350 60  0000 L CNN
@@ -122,7 +121,7 @@ F 12 "Active" H 5800 3550 60  0001 L CNN "Status"
 	1    0    0    1   
 $EndComp
 $Comp
-L dk_Transistors-FETs-MOSFETs-Single:IRLML6401TRPBF Q4
+L mAhTime:dk_Transistors-FETs-MOSFETs-Single_IRLML6401TRPBF Q4
 U 1 1 5D049986
 P 6900 2400
 F 0 "Q4" V 7050 2400 60  0000 L CNN
@@ -274,7 +273,7 @@ Wire Wire Line
 Text Label 6300 2300 0    50   ~ 0
 Ctrl4
 $Comp
-L ESP8266:NodeMCU1.0(ESP-12E) U1
+L mAhTime:ESP8266_NodeMCU1.0(ESP-12E) U1
 U 1 1 5D05B443
 P 5700 5100
 F 0 "U1" H 5700 6187 60  0000 C CNN
@@ -709,4 +708,7 @@ Wire Wire Line
 	6500 5100 6750 5100
 Text Label 6750 5100 2    50   ~ 0
 SCL
+NoConn ~ 6500 5400
+NoConn ~ 6500 5500
+NoConn ~ 6500 5600
 $EndSCHEMATC

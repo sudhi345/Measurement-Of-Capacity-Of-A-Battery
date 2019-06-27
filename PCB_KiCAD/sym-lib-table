@@ -1,3 +1,3 @@
 (sym_lib_table
-  (lib (name CapacityOfBattery-rescue)(type Legacy)(uri ${KIPRJMOD}/CapacityOfBattery-rescue.lib)(options "")(descr ""))
+  (lib (name mAhTime-rescue)(type Legacy)(uri ${KIPRJMOD}/mAhTime-rescue.lib)(options "")(descr ""))
 )
