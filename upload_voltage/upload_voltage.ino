@@ -16,7 +16,7 @@
 float Vbat = 0, saved = 0;
 float last = -1;
 boolean ONCE_DISCHARGED = 0;      
-long int CurTime, StartTime, EndTime;
+unsigned long int CurTime, StartTime, EndTime;
 
 AdafruitIO_Feed *analog = io.feed("analog"); //Set up the feed. Replace "analog" in this line with the name of the feed that you created
 
@@ -78,7 +78,6 @@ void setup() {
   display.setCursor(10,23);
   display.print("Long press: Select");
   display.display();
-  
   loadSelect();           //let the user select load / DUT
   queueInit();
 }
@@ -112,7 +111,7 @@ void loop() {
      }
   }
 
-  CurTime = millis();
-  //delay(2000 - (StartTime - CurTime));
-  delay(1700);
+  while( (millis() - StartTime) < 2000){    //wait for 2 seconds
+      yield();
+  }
 }

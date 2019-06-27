@@ -43,10 +43,47 @@ void displayLoadVal(const char *str) {      //display the selected load
   display.setFont(&FreeSerif9pt7b);
   display.clearDisplay();         //clear the display buffer
   display.setCursor(21,12);
-  display.print("Select Load\n");
+  display.println("Select Load");
   display.setCursor(42,30);     //basically sets cursor to next line &center
   display.print(str);
   display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol
+  display.display();
+  delay(100);
+}
+
+void displayConnectedLd(int sl) {      //display the selected load      
+  display.setFont(&FreeSerif9pt7b);
+  display.clearDisplay();         //clear the display buffer
+  display.setCursor(4,12);
+  display.println("Connected Load");
+  display.setCursor(42,30);     //basically sets cursor to next line & and at the center
+  switch (sl) {   //display options 
+      case 1: { display.print(LOADSTR1);
+                display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol 
+              } break;
+      case 2: { display.print(LOADSTR2); 
+                display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol
+              } break;
+      case 3: { display.print(LOADSTR4); //load string 4 not 3
+                display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol
+              } break;
+      case 4: { display.print(LOADSTR3);
+                display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol 
+              } break;
+      case 5: { display.print(LOADSTR5);
+                display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol 
+              } break;
+      case 6: { display.print(LOADSTR6);
+                display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol 
+              } break;
+      case 7: { display.print(LOADSTR7);
+                display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol 
+              } break;
+      case 8: { display.setCursor(48,30);     //basically sets cursor to next line & at the center
+                display.print("DUT");
+              } break;
+      default:  {  } break;
+    }
   display.display();
   delay(100);
 }
@@ -135,49 +172,49 @@ void attachLoad(int x) {      //function to attach the load on long press
                 digitalWrite(LOAD1,LOW); 
                 digitalWrite(LOAD2,HIGH); 
                 digitalWrite(LOAD3,HIGH); 
-                digitalWrite(DUT,HIGH); 
+                digitalWrite(DUT,HIGH);
                 break ; 
               }
     case 2:  {  //turn on ONE load at a time
                 digitalWrite(LOAD1,HIGH); 
                 digitalWrite(LOAD2,LOW); 
                 digitalWrite(LOAD3,HIGH); 
-                digitalWrite(DUT,HIGH); 
+                digitalWrite(DUT,HIGH);
                 break ; 
               }
-    case 3:  {  //turn on ONE load at a time
-                digitalWrite(LOAD1,HIGH); 
-                digitalWrite(LOAD2,HIGH); 
-                digitalWrite(LOAD3,LOW); 
-                digitalWrite(DUT,HIGH); 
-                break ; 
-              }
-    case 4:  {  //turn on ONE load at a time
+    case 3:  {  //turn on specific loads
                 digitalWrite(LOAD1,LOW); 
                 digitalWrite(LOAD2,LOW); 
                 digitalWrite(LOAD3,HIGH); 
-                digitalWrite(DUT,HIGH); 
+                digitalWrite(DUT,HIGH);
                 break ; 
               }
-    case 5:  {  //turn on ONE load at a time
+    case 4:  {  //turn on ONE load at a time
+                digitalWrite(LOAD1,HIGH); 
+                digitalWrite(LOAD2,HIGH); 
+                digitalWrite(LOAD3,LOW); 
+                digitalWrite(DUT,HIGH);
+                break ; 
+              }
+    case 5:  {  //turn on specific loads
                 digitalWrite(LOAD1,LOW); 
                 digitalWrite(LOAD2,HIGH); 
                 digitalWrite(LOAD3,LOW); 
-                digitalWrite(DUT,HIGH); 
+                digitalWrite(DUT,HIGH);
                 break ; 
               }
-    case 6:  {  //turn on ONE load at a time
+    case 6:  {  //turn on specific loads
                 digitalWrite(LOAD1,HIGH); 
                 digitalWrite(LOAD2,LOW); 
                 digitalWrite(LOAD3,LOW); 
-                digitalWrite(DUT,HIGH); 
+                digitalWrite(DUT,HIGH);
                 break ; 
               }
-    case 7:  {  //turn on ONE load at a time
+    case 7:  {  //turn on specific loads
                 digitalWrite(LOAD1,LOW); 
                 digitalWrite(LOAD2,LOW); 
                 digitalWrite(LOAD3,LOW); 
-                digitalWrite(DUT,HIGH); 
+                digitalWrite(DUT,HIGH);
                 break ; 
               }
     case 8:  {  //turn on ONE load at a time
@@ -213,11 +250,11 @@ void loadSelect() {    //gets input from the user and attaches the load
     selected++; 
     if(selected == 9) 
       selected=1;     //roll over condition
-    switch (selected) {   //turn ON specific LED(s) 
+    switch (selected) {   //display options 
       case 1: { displayLoadVal(LOADSTR1); } break;
       case 2: { displayLoadVal(LOADSTR2); } break;
-      case 3: { displayLoadVal(LOADSTR3); } break;
-      case 4: { displayLoadVal(LOADSTR4); } break;
+      case 3: { displayLoadVal(LOADSTR4); } break;
+      case 4: { displayLoadVal(LOADSTR3); } break;
       case 5: { displayLoadVal(LOADSTR5); } break;
       case 6: { displayLoadVal(LOADSTR6); } break;
       case 7: { displayLoadVal(LOADSTR7); } break;
@@ -235,6 +272,7 @@ void loadSelect() {    //gets input from the user and attaches the load
   }
   if( typeOfPress == 2 ) { //if long press detected (no need to check the validity of 'selected', that's taken care by the switch statement)
        attachLoad(selected);            //attach the load
+       displayConnectedLd(selected);     //display the attached load
        break;                  //break from the while(1)
   }
   delay(0);   // avoid rebooting of the MCU
