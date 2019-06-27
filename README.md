@@ -1,4 +1,4 @@
-# Measurement-Of-Capacity-Of-A-Battery
+# mAhTime
 
 ### Objective :
 
