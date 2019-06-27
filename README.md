@@ -2,7 +2,7 @@
 
 ### Objective :
 
-To calculate the estimated battery life for a device with the given batteries and in tern use the data to calculate for any battery.
+To calculate the battery life for a device with small batteries and in tern use the data to calculate for any bigger battery.
 
 ###  Why do we need this?
 

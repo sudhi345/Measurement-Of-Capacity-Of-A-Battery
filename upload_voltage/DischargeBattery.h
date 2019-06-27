@@ -1,3 +1,10 @@
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include "displaySymbols.h"
+#include <Fonts/FreeSerif9pt7b.h>
+
 #define BUFF_SIZE 1000   //max size of the buffer
 #define LOAD1 16        //load resistance of 564ohm
 #define LOAD2 5        //load resistance of 232ohm
@@ -6,10 +13,19 @@
 #define FLASH_BUTTON 0    //pin to which the 'Flash' push button is connected.
 #define LED0 2            //define the inbuilt led pin
 #define SW   0           //define the pin connected to the push button
-#define scl  14
-#define sda  2
-#define EN_VOLTAGE_DIVIDER 12 //pin D6 which drives the gate of a mosfet which enables the voltage divider for analog input.
+#define SCL_PIN  14      //define pins for I2C communication
+#define SDA_PIN  2
+#define EN_VOLTAGE_DIVIDER 12 //the gate of a mosfet which enables the voltage divider for analog input.
 #define Vin A0            //input: battery voltage 
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 32 // OLED display height, in pixels
+const char LOADSTR1[]="464"; //define string containing load values
+const char LOADSTR2[]="232";
+const char LOADSTR3[]="116";
+const char LOADSTR4[]="155";
+const char LOADSTR5[]="093";
+const char LOADSTR6[]="077";
+const char LOADSTR7[]="066";
 const boolean ON = 1;
 const boolean OFF = 0;
 const float VLowerCutOff = 2.1;  //define the lower cut off voltage or the end of discharge voltage for the battery
@@ -20,6 +36,26 @@ int front;                       //front index of queue (next empty location)
 int rear;                        //rear index of queue  (first filled location)
 int typeOfPress = 0;              //store whether long press or short press
 float Queue[BUFF_SIZE];           //buffer stucture for storing the values if connection is lost
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire);    //define display object
+
+void displayLoadVal(const char *str) {      //display the selected load      
+  display.setFont(&FreeSerif9pt7b);
+  display.clearDisplay();         //clear the display buffer
+  display.setCursor(21,12);
+  display.print("Select Load\n");
+  display.setCursor(42,30);     //basically sets cursor to next line &center
+  display.print(str);
+  display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol
+  display.display();
+  delay(100);
+}
+
+void displayWifiSymbol() {
+  display.drawBitmap(114,0,wifi,wifi_width,wifi_height,1);
+  display.display();
+  delay(100);
+}
 
 void queueInit() {     //initialize pointers (queue is empty)
   front = 0;
@@ -117,6 +153,34 @@ void attachLoad(int x) {      //function to attach the load on long press
                 break ; 
               }
     case 4:  {  //turn on ONE load at a time
+                digitalWrite(LOAD1,LOW); 
+                digitalWrite(LOAD2,LOW); 
+                digitalWrite(LOAD3,HIGH); 
+                digitalWrite(DUT,HIGH); 
+                break ; 
+              }
+    case 5:  {  //turn on ONE load at a time
+                digitalWrite(LOAD1,LOW); 
+                digitalWrite(LOAD2,HIGH); 
+                digitalWrite(LOAD3,LOW); 
+                digitalWrite(DUT,HIGH); 
+                break ; 
+              }
+    case 6:  {  //turn on ONE load at a time
+                digitalWrite(LOAD1,HIGH); 
+                digitalWrite(LOAD2,LOW); 
+                digitalWrite(LOAD3,LOW); 
+                digitalWrite(DUT,HIGH); 
+                break ; 
+              }
+    case 7:  {  //turn on ONE load at a time
+                digitalWrite(LOAD1,LOW); 
+                digitalWrite(LOAD2,LOW); 
+                digitalWrite(LOAD3,LOW); 
+                digitalWrite(DUT,HIGH); 
+                break ; 
+              }
+    case 8:  {  //turn on ONE load at a time
                 digitalWrite(LOAD1,HIGH); 
                 digitalWrite(LOAD2,HIGH); 
                 digitalWrite(LOAD3,HIGH); 
@@ -142,24 +206,34 @@ void led(int led_pin, boolean y) {    //function to turn on or off LED
 void loadSelect() {    //gets input from the user and attaches the load
   while(1) {
   while((digitalRead(SW)) && (selected <= 0)) {
-    led(LED0,OFF);  //turn off led
     delay(0);      //stops resetting the MCU
   }
   typeOfPress = buttonPressed();
   if ( typeOfPress == 1 ) {    //if short press detected
     selected++; 
-    if(selected == 5) 
+    if(selected == 9) 
       selected=1;     //roll over condition
     switch (selected) {   //turn ON specific LED(s) 
-      case 1: { led(scl,OFF); led(sda,OFF); } break;
-      case 2: { led(scl,OFF); led(sda,ON); } break;
-      case 3: { led(scl,ON); led(sda,OFF); } break;
-      case 4: { led(scl,ON); led(sda,ON); } break;
-      default:  { led(scl,OFF); led(sda,OFF); } break;
+      case 1: { displayLoadVal(LOADSTR1); } break;
+      case 2: { displayLoadVal(LOADSTR2); } break;
+      case 3: { displayLoadVal(LOADSTR3); } break;
+      case 4: { displayLoadVal(LOADSTR4); } break;
+      case 5: { displayLoadVal(LOADSTR5); } break;
+      case 6: { displayLoadVal(LOADSTR6); } break;
+      case 7: { displayLoadVal(LOADSTR7); } break;
+      case 8: { display.setFont(&FreeSerif9pt7b);
+                display.clearDisplay();         //clear the display buffer
+                display.setCursor(21,12);
+                display.print("Select Load\n");
+                display.setCursor(48,30);     //basically sets cursor to next line &center
+                display.print("DUT");
+                display.display();
+                delay(100);
+              } break;
+      default:  {  } break;
     }
   }
   if( typeOfPress == 2 ) { //if long press detected (no need to check the validity of 'selected', that's taken care by the switch statement)
-       led(scl,OFF); led(sda,OFF);
        attachLoad(selected);            //attach the load
        break;                  //break from the while(1)
   }
