@@ -1,17 +1,17 @@
 #include <SPI.h>
 #include <Wire.h>
+#include <ESP8266WiFi.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include "displaySymbols.h"
 #include <Fonts/FreeSerif9pt7b.h>
+#include <Fonts/FreeSans9pt7b.h>
 
 #define BUFF_SIZE 1000   //max size of the buffer
 #define LOAD1 16        //load resistance of 564ohm
 #define LOAD2 5        //load resistance of 232ohm
 #define LOAD3 4       //load resistance of 116ohm
 #define DUT   13       //load is the Device Under Test (DUT)
-#define FLASH_BUTTON 0    //pin to which the 'Flash' push button is connected.
-#define LED0 2            //define the inbuilt led pin
 #define SW   0           //define the pin connected to the push button
 #define SCL_PIN  14      //define pins for I2C communication
 #define SDA_PIN  2
@@ -21,14 +21,13 @@
 #define SCREEN_HEIGHT 32 // OLED display height, in pixels
 const char LOADSTR1[]="464"; //define string containing load values
 const char LOADSTR2[]="232";
-const char LOADSTR3[]="116";
-const char LOADSTR4[]="155";
+const char LOADSTR3[]="155";
+const char LOADSTR4[]="116";
 const char LOADSTR5[]="093";
 const char LOADSTR6[]="077";
 const char LOADSTR7[]="066";
-const boolean ON = 1;
-const boolean OFF = 0;
-const float VLowerCutOff = 2.1;  //define the lower cut off voltage or the end of discharge voltage for the battery
+const char LOADSTR8[]="DUT";
+const float VLowerCutOff = 2.100000;  //define the lower cut off voltage or the end of discharge voltage for the battery
 const int Vin_max = 3;           //maximum voltage that can be given as analog input
 const int Vin_min = 0;           //minimum voltage that can be given as analog input
 int selected = 0;                //to store the previously selected load
@@ -36,67 +35,19 @@ int front;                       //front index of queue (next empty location)
 int rear;                        //rear index of queue  (first filled location)
 int typeOfPress = 0;              //store whether long press or short press
 float Queue[BUFF_SIZE];           //buffer stucture for storing the values if connection is lost
+unsigned long int _time, CurTime, StartTime, EndTime = 0, displayedAt = 0;
+unsigned short int days = 0, hours = 0, minutes = 0;  //variables to store elapsed time
+boolean DISP_ON = 1;    //flag to store whether to keep display on or off (cleared)
+boolean ONCE_DISCHARGED = 0;   //flag to save once the batteries get discharged
+boolean DISP_CLEAR_REQUIRED = 0;
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire);    //define display object
-
-void displayLoadVal(const char *str) {      //display the selected load      
-  display.setFont(&FreeSerif9pt7b);
-  display.clearDisplay();         //clear the display buffer
-  display.setCursor(21,12);
-  display.println("Select Load");
-  display.setCursor(42,30);     //basically sets cursor to next line &center
-  display.print(str);
-  display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol
-  display.display();
-  delay(100);
-}
-
-void displayConnectedLd(int sl) {      //display the selected load      
-  display.setFont(&FreeSerif9pt7b);
-  display.clearDisplay();         //clear the display buffer
-  display.setCursor(4,12);
-  display.println("Connected Load");
-  display.setCursor(42,30);     //basically sets cursor to next line & and at the center
-  switch (sl) {   //display options 
-      case 1: { display.print(LOADSTR1);
-                display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol 
-              } break;
-      case 2: { display.print(LOADSTR2); 
-                display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol
-              } break;
-      case 3: { display.print(LOADSTR4); //load string 4 not 3
-                display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol
-              } break;
-      case 4: { display.print(LOADSTR3);
-                display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol 
-              } break;
-      case 5: { display.print(LOADSTR5);
-                display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol 
-              } break;
-      case 6: { display.print(LOADSTR6);
-                display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol 
-              } break;
-      case 7: { display.print(LOADSTR7);
-                display.drawBitmap(72,19,ohm,ohm_width,ohm_height,1);    //display ohm symbol 
-              } break;
-      case 8: { display.setCursor(48,30);     //basically sets cursor to next line & at the center
-                display.print("DUT");
-              } break;
-      default:  {  } break;
-    }
-  display.display();
-  delay(100);
-}
-
-void displayWifiSymbol() {
-  display.drawBitmap(114,0,wifi,wifi_width,wifi_height,1);
-  display.display();
-  delay(100);
-}
 
 void queueInit() {     //initialize pointers (queue is empty)
   front = 0;
   rear = 0;
+  for (int i; i < BUFF_SIZE; i++)
+    Queue[i] = 0;
 }
 
 void enqueue(float V) {   //write a value to the buffer
@@ -108,16 +59,10 @@ void enqueue(float V) {   //write a value to the buffer
 
 float dequeue() {     //read value from the buffer
   float val;
-  if( (rear == ( front - 1 )) || (rear == (BUFF_SIZE - 1)) ) {  //queue has only one value
-    val = Queue[rear];   //store value in a temporay variable
-    queueInit();         //re-initialize 
-  }
-  else {
     val = Queue[rear];
     rear++;         //increment rear to point to next filled location
     if ( rear == BUFF_SIZE )
       rear = 0;   //if overflows set it back to 0 (circular behavior)
-  }
   return val;
 }
 
@@ -154,16 +99,6 @@ int buttonPressed() {     //function to detect if the button is pressed / not pr
     else return 0;          //0 means button is not pressed
   }
   else return 0;            //0 means button is not pressed
-}
-
-void blinky(int led_pin, int number) {          //function to make an led blink
-  for ( ; number > 0; number--) {
-    digitalWrite(led_pin,LOW);      //LED ON (all are active low LEDs)
-    delay(300);
-    digitalWrite(led_pin,HIGH);     //LED OFF
-    delay(200);
-  }
-  return;
 }
 
 void attachLoad(int x) {      //function to attach the load on long press
@@ -235,9 +170,35 @@ void attachLoad(int x) {      //function to attach the load on long press
   return;
 }
 
-void led(int led_pin, boolean y) {    //function to turn on or off LED
-  digitalWrite(led_pin,!y);           //active low LEDs
-  return;
+void displayLoadVal(int posX, int posY, int slctd) {      //display the selected load 
+  const char *str;
+  switch (slctd) {   //display options 
+      case 1: { str = LOADSTR1; } break;
+      case 2: { str = LOADSTR2; } break;
+      case 3: { str = LOADSTR3; } break;
+      case 4: { str = LOADSTR4; } break;
+      case 5: { str = LOADSTR5; } break;
+      case 6: { str = LOADSTR6; } break;
+      case 7: { str = LOADSTR7; } break;
+      case 8: { str = LOADSTR8; } break;
+      default:  {  } break;
+    }     
+  display.setCursor(posX,posY);     //basically sets cursor to next line & at the center
+  if (str == LOADSTR8) 
+    display.setCursor( (posX + 6), posY);   //for DUT move little more towrds +x as there is no ohm symbol after that
+  display.print(str);
+  if (str != LOADSTR8)       //no ohm symbol for load DUT
+      display.drawBitmap((posX + 30),(posY-11),ohm,ohm_width,ohm_height,1);    //display ohm symbol
+}
+
+void displayConnectedLd(int posX, int posY, int sl) {      //display the selected load      
+  display.setFont(&FreeSerif9pt7b);
+  display.clearDisplay();         //clear the display buffer
+  display.setCursor(4,12);
+  display.println("Connected Load");
+  displayLoadVal(posX,posY,sl);
+  display.display();
+  delay(100);
 }
 
 void loadSelect() {    //gets input from the user and attaches the load
@@ -250,32 +211,95 @@ void loadSelect() {    //gets input from the user and attaches the load
     selected++; 
     if(selected == 9) 
       selected=1;     //roll over condition
-    switch (selected) {   //display options 
-      case 1: { displayLoadVal(LOADSTR1); } break;
-      case 2: { displayLoadVal(LOADSTR2); } break;
-      case 3: { displayLoadVal(LOADSTR4); } break;
-      case 4: { displayLoadVal(LOADSTR3); } break;
-      case 5: { displayLoadVal(LOADSTR5); } break;
-      case 6: { displayLoadVal(LOADSTR6); } break;
-      case 7: { displayLoadVal(LOADSTR7); } break;
-      case 8: { display.setFont(&FreeSerif9pt7b);
-                display.clearDisplay();         //clear the display buffer
-                display.setCursor(21,12);
-                display.print("Select Load\n");
-                display.setCursor(48,30);     //basically sets cursor to next line &center
-                display.print("DUT");
-                display.display();
-                delay(100);
-              } break;
-      default:  {  } break;
-    }
+    display.setFont(&FreeSerif9pt7b);
+    display.clearDisplay();         //clear the display buffer
+    display.setCursor(21,12);
+    display.print("Select Load\n");
+    displayLoadVal(42,30,selected);
+    display.display();
   }
   if( typeOfPress == 2 ) { //if long press detected (no need to check the validity of 'selected', that's taken care by the switch statement)
        attachLoad(selected);            //attach the load
-       displayConnectedLd(selected);     //display the attached load
+       displayConnectedLd(42,30,selected);     //display the attached load
        break;                  //break from the while(1)
   }
   delay(0);   // avoid rebooting of the MCU
  }
  return;
+}
+
+void updateElapsedTime() {
+   unsigned long int TimeDiff;
+   CurTime = millis ();  //get the current time in milliseconds
+   TimeDiff = CurTime - StartTime;  //store the difference between current time and starting time
+   TimeDiff /= 1000;   //convert to sec. from milli sec.
+   days = int ( (TimeDiff)/86400 );  //one day = 86,400 s
+   TimeDiff %= 86400;      //store the reminder for rest of the calculations
+   hours = int ( (TimeDiff)/3600 );  //one hour = 3,600 s
+   TimeDiff %= 3600;
+   minutes = int ( (TimeDiff)/60 );
+   return;
+}
+
+void updateDisplay() {  //function to update display contents
+  if (ONCE_DISCHARGED) {      //message if the batteries are discharged
+    display.clearDisplay();
+    display.setCursor(0,12);
+    display.print(days);
+    display.print("d:");
+    display.print(hours);
+    display.print("h:");
+    display.print(minutes);
+    display.print("m");
+    displayLoadVal(80,30,selected);
+    display.setCursor(0,30);
+    display.print("Dischrgd");
+    display.setCursor(70,28);
+    display.print(".,");
+    WiFi.mode(WIFI_OFF);  //turn off wifi
+  }
+  else {  //message when batteries are being discharged
+    updateElapsedTime();
+    display.clearDisplay();
+    display.setCursor(0,12);
+    display.print(days);
+    display.print("d:");
+    display.print(hours);
+    display.print("h:");
+    display.print(minutes);
+    display.print("m");
+    display.setCursor(0,30);
+    display.print(Queue[front-1]);
+    display.print("V  Ld:");
+    display.drawBitmap(114,0,wifi,wifi_width,wifi_height,1);
+    displayLoadVal(80,30,selected);
+  }
+  display.display();
+  DISP_CLEAR_REQUIRED = 1;
+  return;
+}
+
+void checkForUpdate() {
+  if ((_time - StartTime) < 10000) {    //update the display for first ten seconds
+        updateDisplay();
+        DISP_ON = 0;
+      }
+  else if ( !digitalRead(SW)){       //any time if the user presses the push button update the display
+    updateDisplay();
+    DISP_ON = 1;
+    displayedAt = millis();       //save the time at which it displayed
+  }
+  else if (DISP_ON) {
+     updateDisplay();
+  }
+  else if (DISP_CLEAR_REQUIRED && (!DISP_ON)) {
+    display.clearDisplay();
+    display.display();
+  }
+  else;
+  
+  if ((millis() - displayedAt) > 3900 )   // at least display for ~4 sec.
+    DISP_ON = 0;            //otherwise keep the display clear
+
+  return;
 }
