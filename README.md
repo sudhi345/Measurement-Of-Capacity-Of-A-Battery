@@ -43,7 +43,7 @@ The hardware limits the maximum battery voltage to 3V and the choosen MOS switch
 / time taken for the measurement.  
 The circuit connections and the designed PCB can be found in the directory PCB_KICAD.
 The details about the charger and the battery can be found in 'Charger_hacked' directory. <br>
-Arduino IDE is used to program the microcontroller. The required header files and libraries are in the 'upload_voltage' directory.
+Arduino IDE is used to program the microcontroller. The required header files and libraries are in the 'src' directory.
 
 ### Conclusion:
 
