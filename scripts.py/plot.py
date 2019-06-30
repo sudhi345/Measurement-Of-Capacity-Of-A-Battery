@@ -41,16 +41,15 @@ fig, ax1 = plt.subplots()
 
 l=len(Value) #get the number of columns
 x=range(0,2*l-1,2)	#time varies from 0 to 2l-1 with a step size of 2sec
-mAh=trapz(Value,dx=2) 	#area under the curve
-print mAh
-mAh /= resistance		#divided by the load resistance gives the capacity in  mAh
+I = [(i/resistance) for i in Value]  	#divided by the load resistance gives the current value (mA)
+mAh=trapz(I,dx=2) 	#area under the curve
 mAh /= 3600      #to convert time unit from seconds to hour
 zz = "Capacity: " + str(mAh)[0 : 7] +"mAh\nNo. of data points:"+str(l)  #string to display capacity
 hours = range (0,864000,3600)  #hours in seconds for 10 days
 hrNo = range (0,240,1)		#define hour numbers
 
 bbox_props = dict(boxstyle="square,pad=0.3", fc="green", ec="b", lw=1)		#define properties of the square box
-ax1.text(x[l-1], 0, zz, ha="right", va="bottom",
+ax1.text((x[l-1] + 900), Value[l-1], zz, ha="left", va="bottom",
             size=12,
             bbox=bbox_props)		#display the capacity i.e. area under I v/s t
 ax1.text(0, -0.25, strtT, ha="center", va="top",
