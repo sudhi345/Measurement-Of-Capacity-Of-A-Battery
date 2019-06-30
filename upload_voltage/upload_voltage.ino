@@ -51,16 +51,8 @@ void setup() {
   display.println("Connected");
   display.display();
   delay(1000);
-  display.clearDisplay();
-  display.setCursor(21,12);
-  display.print("Select Load\n");
-  display.setFont();    //set default font
-  display.setCursor(4,14);
-  display.print("Short press: Options\n");
-  display.setCursor(10,23);
-  display.print("Long press: Select");
-  display.display();
   queueInit();     //initialize queue
+  checkBattery();   //verify whther connected battery has voltage > VLowerCutOff
   loadSelect();           //let the user select load / DUT
   display.setFont(&FreeSans9pt7b);  //change font to Sans
   StartTime = millis();     //save the starting time
@@ -75,10 +67,11 @@ void loop() {
     Vbat = readVoltage();
   if( !(Vbat < VLowerCutOff) )
     enqueue(Vbat);    //enqueue the values
-  if( (!(io.status() < AIO_CONNECTED)) && (rear != front) ) {     //connected but queue is not empty
-    saved = dequeue();  //read value from the queue
-    analog->save(saved); // save the value to the feed
-  } 
+  if (rear != front)    //queue is not empty
+    if(!(io.status() < AIO_CONNECTED)) {     //connected 
+      saved = dequeue();                             //read value from the queue
+      analog->save(saved);                           // save the value to the feed
+    } 
   if(Vbat < VLowerCutOff)  {   //if the battery Vbat falls below the lower cut off
       ONCE_DISCHARGED = 1;         //clear the ONCE_DISCHARGED so that it does not oscillate when terminal Vbat rises slightly.
       turnOffAllLoad();    //turn OFF ALL loads when batteries got fully discharged.
@@ -86,10 +79,11 @@ void loop() {
       DISP_ON = 1; //display that the batteries got discharged
       displayedAt = millis ();  //this is required when display is turned on using DISP_ON
       while(1){
-        if( (!(io.status() < AIO_CONNECTED)) && (rear != front) ) {   //connected but queue is not empty
-          saved = dequeue();          //read value from the queue
-          analog->save(Vbat);         // save the value to the feed
-        }
+        if (rear != front)    //queue is not empty
+          if(!(io.status() < AIO_CONNECTED)) {     //connected 
+            saved = dequeue();                             //read value from the queue
+            analog->save(saved);                           // save the value to the feed
+          } 
         checkForUpdate();
         yield();  
      }

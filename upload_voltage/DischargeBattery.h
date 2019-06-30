@@ -36,7 +36,7 @@ int rear;                        //rear index of queue  (first filled location)
 int typeOfPress = 0;              //store whether long press or short press
 float Queue[BUFF_SIZE];           //buffer stucture for storing the values if connection is lost
 unsigned long int _time, CurTime, StartTime, EndTime = 0, displayedAt = 0;
-unsigned short int days = 0, hours = 0, minutes = 0;  //variables to store elapsed time
+unsigned short int days = 0, hours = 0, minutes = 0, seconds = 0;  //variables to store elapsed time
 boolean DISP_ON = 1;    //flag to store whether to keep display on or off (cleared)
 boolean ONCE_DISCHARGED = 0;   //flag to save once the batteries get discharged
 boolean DISP_CLEAR_REQUIRED = 0;
@@ -79,6 +79,26 @@ float readVoltage() {  //reads voltage at Vin by enabling the voltage divider
   v=analogRead(Vin);
   digitalWrite(EN_VOLTAGE_DIVIDER, LOW);
   return ((float(Vin_max - Vin_min)*v)/1024);
+}
+
+void checkBattery() {
+  float checkVoltage;
+  checkVoltage = readVoltage();
+  if (checkVoltage < VLowerCutOff) {   //if the read voltage is less than lower cut off display error message
+    display.clearDisplay();
+    display.setFont(&FreeSerif9pt7b);
+    display.setCursor(35,12);
+    display.print("ERROR");
+    display.setFont();
+    display.setCursor(0,14);
+    display.print("Battery not connected\nor already discharged");
+    display.display();
+    while (checkVoltage < VLowerCutOff) {
+      checkVoltage = readVoltage();
+      delay(500);
+    }
+  }
+  return;
 }
 
 int buttonPressed() {     //function to detect if the button is pressed / not pressed / long pressed 
@@ -202,6 +222,16 @@ void displayConnectedLd(int posX, int posY, int sl) {      //display the selecte
 }
 
 void loadSelect() {    //gets input from the user and attaches the load
+  display.clearDisplay();
+  display.setFont(&FreeSerif9pt7b);
+  display.setCursor(21,12);
+  display.print("Select Load\n");
+  display.setFont();    //set default font
+  display.setCursor(4,14);
+  display.print("Short press: Options\n");
+  display.setCursor(10,23);
+  display.print("Long press: Select");
+  display.display();
   while(1) {
   while((digitalRead(SW)) && (selected <= 0)) {
     delay(0);      //stops resetting the MCU
@@ -228,30 +258,48 @@ void loadSelect() {    //gets input from the user and attaches the load
  return;
 }
 
-void updateElapsedTime() {
+void updateElapsedTime(boolean TILL_WHEN) {
    unsigned long int TimeDiff;
    CurTime = millis ();  //get the current time in milliseconds
-   TimeDiff = CurTime - StartTime;  //store the difference between current time and starting time
+   if (TILL_WHEN)
+      TimeDiff = CurTime - StartTime;  //store the difference between current time and start time
+   if (!TILL_WHEN)
+      TimeDiff = EndTime - StartTime;  //store the difference between end time and start time
    TimeDiff /= 1000;   //convert to sec. from milli sec.
    days = int ( (TimeDiff)/86400 );  //one day = 86,400 s
    TimeDiff %= 86400;      //store the reminder for rest of the calculations
    hours = int ( (TimeDiff)/3600 );  //one hour = 3,600 s
    TimeDiff %= 3600;
    minutes = int ( (TimeDiff)/60 );
+   TimeDiff %= 60;
+   seconds = TimeDiff;
+
+    display.clearDisplay();
+    display.setFont();        //default font
+    display.setCursor(0,0);
+    display.println("Elapsed Time : ");
+    display.setCursor(0,9);
+    display.print(days/10);   //first digit of days
+    display.print(days%10);   //second digit of days
+    display.print("d:");
+    display.print(hours/10);   //first digit of hours
+    display.print(hours%10);   //second digit of hours
+    display.print("h:");
+    display.print(minutes/10);   //first digit of minutes
+    display.print(minutes%10);   //second digit of minutes
+    display.print("m:");
+    display.print(seconds/10);   //first digit of seconds
+    display.print(seconds%10);   //second digit of seconds
+    display.print("s");
    return;
 }
 
 void updateDisplay() {  //function to update display contents
   if (ONCE_DISCHARGED) {      //message if the batteries are discharged
-    display.clearDisplay();
-    display.setCursor(0,12);
-    display.print(days);
-    display.print("d:");
-    display.print(hours);
-    display.print("h:");
-    display.print(minutes);
-    display.print("m");
-    displayLoadVal(80,30,selected);
+    updateElapsedTime(0);     //difference between StartTime and EndTime
+    display.setCursor(114,4);
+    display.print("x");
+    display.setFont(&FreeSans9pt7b);
     display.setCursor(0,30);
     display.print("Dischrgd");
     display.setCursor(70,28);
@@ -259,21 +307,14 @@ void updateDisplay() {  //function to update display contents
     WiFi.mode(WIFI_OFF);  //turn off wifi
   }
   else {  //message when batteries are being discharged
-    updateElapsedTime();
-    display.clearDisplay();
-    display.setCursor(0,12);
-    display.print(days);
-    display.print("d:");
-    display.print(hours);
-    display.print("h:");
-    display.print(minutes);
-    display.print("m");
+    updateElapsedTime(1);     //difference between StartTime and CurTime
+    display.setFont(&FreeSans9pt7b);
     display.setCursor(0,30);
     display.print(Queue[front-1]);
     display.print("V  Ld:");
-    display.drawBitmap(114,0,wifi,wifi_width,wifi_height,1);
-    displayLoadVal(80,30,selected);
   }
+  display.drawBitmap(114,0,wifi,wifi_width,wifi_height,1);
+  displayLoadVal(80,30,selected);
   display.display();
   DISP_CLEAR_REQUIRED = 1;
   return;
@@ -298,7 +339,7 @@ void checkForUpdate() {
   }
   else;
   
-  if ((millis() - displayedAt) > 3900 )   // at least display for ~4 sec.
+  if ((millis() - displayedAt) > 5900 )   // at least display for ~4 sec.
     DISP_ON = 0;            //otherwise keep the display clear
 
   return;
