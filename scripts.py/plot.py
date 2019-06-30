@@ -49,7 +49,7 @@ hours = range (0,864000,3600)  #hours in seconds for 10 days
 hrNo = range (0,240,1)		#define hour numbers
 
 bbox_props = dict(boxstyle="square,pad=0.3", fc="green", ec="b", lw=1)		#define properties of the square box
-ax1.text((x[l-1] + 900), Value[l-1], zz, ha="left", va="bottom",
+ax1.text((x[l-1] + (x[l-1]-x[0])*0.01), Value[l-1], zz, ha="left", va="bottom",
             size=12,
             bbox=bbox_props)		#display the capacity i.e. area under I v/s t
 ax1.text(0, -0.25, strtT, ha="center", va="top",

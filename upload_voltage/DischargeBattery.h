@@ -339,7 +339,7 @@ void checkForUpdate() {
   }
   else;
   
-  if ((millis() - displayedAt) > 5900 )   // at least display for ~4 sec.
+  if ((millis() - displayedAt) > 9900 )   // at least display for ~10 sec.
     DISP_ON = 0;            //otherwise keep the display clear
 
   return;
