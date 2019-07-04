@@ -46,10 +46,11 @@ The circuit connections and the designed PCB can be found in the directory PCB_K
 The details about the charger and the battery can be found in the 'Charger_hacked' directory. <br>
 Arduino IDE is used to program the microcontroller. The required header files and libraries are in the 'upload_voltage' directory.
 
-![Snapshots of the display](https://github.com/sudhi345/mAhTime/blob/master/display_snapshot.png)
+![Snapshots of the display](https://github.com/sudhi345/mAhTime/blob/master/gallery/display_snapshot.png)
 
 ### Result:
 
+![Graph and the soldered PCB](https://github.com/sudhi345/mAhTime/blob/master/gallery/graph-and-pcb.png)
 
 ### Conclusion:
 
