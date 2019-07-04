@@ -39,12 +39,17 @@ The voltage divider is not the one which is present on the LOLin board. Those ar
 hence the readings may not be accurate.
 The n-MOS switch is required as the voltage divider acts as another resistive load parallel to the selected load.
 An OLED display is used to display the selected load, time, etc.
-The hardware limits the maximum battery voltage to 3V and the chosen MOS switches and loads limit the maximum battery capacity/time taken for the measurement.  
+
+The hardware limits the maximum battery voltage to 3.6V as the battery voltage appears at pin A0 when voltage divider is disabled and the absolute maximum voltage given is 3.6V for esp8266. The time taken for measurement is determined by the capacity of the battery and the chosen load.
+
 The circuit connections and the designed PCB can be found in the directory PCB_KICAD.
 The details about the charger and the battery can be found in the 'Charger_hacked' directory. <br>
 Arduino IDE is used to program the microcontroller. The required header files and libraries are in the 'upload_voltage' directory.
 
 ![Snapshots of the display](https://github.com/sudhi345/mAhTime/blob/master/display_snapshot.png)
+
+### Result:
+
 
 ### Conclusion:
 
