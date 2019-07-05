@@ -50,6 +50,7 @@ Arduino IDE is used to program the microcontroller. The required header files an
 
 ### Result:
 
+Here are pictures of graph and the PCB.
 ![Graph and the soldered PCB](https://github.com/sudhi345/mAhTime/blob/master/gallery/graph-and-pcb.png)
 
 ### Conclusion:
