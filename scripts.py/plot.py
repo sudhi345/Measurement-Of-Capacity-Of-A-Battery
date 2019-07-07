@@ -52,10 +52,10 @@ bbox_props = dict(boxstyle="square,pad=0.3", fc="green", ec="b", lw=1)		#define 
 ax1.text((x[l-1] + (x[l-1]-x[0])*0.01), Value[l-1], zz, ha="left", va="bottom",
             size=12,
             bbox=bbox_props)		#display the capacity i.e. area under I v/s t
-ax1.text(0, -0.25, strtT, ha="center", va="top",
+ax1.text(0, (Value[l-1]-(Value[0]-Value[l-1])*0.1), strtT, ha="center", va="top",
             size=10,
             bbox=bbox_props)		#display start time
-ax1.text(2*l-1, -0.25, endT, ha="center", va="top",
+ax1.text(2*l-1, (Value[l-1]-(Value[0]-Value[l-1])*0.1), endT, ha="center", va="top",
             size=10,
             bbox=bbox_props)		#display end Time 
 

@@ -237,6 +237,8 @@ void loadSelect() {    //gets input from the user and attaches the load
     delay(0);      //stops resetting the MCU
   }
   typeOfPress = buttonPressed();
+  if ((selected == 0) && (typeOfPress != 0))
+    typeOfPress = 1;           //first time long press or short press, consider it as short press
   if ( typeOfPress == 1 ) {    //if short press detected
     selected++; 
     if(selected == 9) 
