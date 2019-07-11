@@ -96,10 +96,13 @@ void loop() {
   // io.run(); is required for all sketches. It should always be present at the top of your loop function. It keeps the client connected to
   // io.adafruit.com, and processes any incoming data.
   io.run();
+
   if( !ONCE_DISCHARGED )  
     Vbat = readVoltage();
+
   if( !(Vbat < VLowerCutOff) )
     enqueue(Vbat);    //enqueue the values 
+
   if(Vbat < VLowerCutOff)  {   //if the battery Vbat falls below the lower cut off
       ONCE_DISCHARGED = 1;         //clear the ONCE_DISCHARGED so that it does not oscillate when terminal Vbat rises slightly.
       turnOffAllLoad();    //turn OFF ALL loads when batteries got fully discharged.
