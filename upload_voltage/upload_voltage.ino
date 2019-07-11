@@ -99,12 +99,7 @@ void loop() {
   if( !ONCE_DISCHARGED )  
     Vbat = readVoltage();
   if( !(Vbat < VLowerCutOff) )
-    enqueue(Vbat);    //enqueue the values
-  if (rear != front)    //queue is not empty
-    if(!(io.status() < AIO_CONNECTED)) {     //connected 
-      saved = dequeue();                             //read value from the queue
-      analog->save(saved);                           // save the value to the feed
-    } 
+    enqueue(Vbat);    //enqueue the values 
   if(Vbat < VLowerCutOff)  {   //if the battery Vbat falls below the lower cut off
       ONCE_DISCHARGED = 1;         //clear the ONCE_DISCHARGED so that it does not oscillate when terminal Vbat rises slightly.
       turnOffAllLoad();    //turn OFF ALL loads when batteries got fully discharged.
